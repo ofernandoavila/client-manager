@@ -32,32 +32,10 @@ class ClientController extends Controller {
 
         $clientToEdit = $this->GetClientById($client->id);
 
-        if($client->name != '' && $client->name != $clientToEdit->name) {
-            $clientToEdit->name = $client->name;
-        }
-
-        if ($client->email != '' && $client->email != $clientToEdit->email) {
-            $clientToEdit->email = $client->email;
-        }
-
-        if ($client->phone != '' && $client->phone != $clientToEdit->phone) {
-            $clientToEdit->phone = $client->phone;
-        }
-
-        if ($client->address != '' && $client->address != $clientToEdit->address) {
-            $clientToEdit->address = $client->address;
-        }
-
-        if ($client->city != '' && $client->city != $clientToEdit->city) {
-            $clientToEdit->city = $client->city;
-        }
-
-        if ($client->state != '' && $client->state != $clientToEdit->state) {
-            $clientToEdit->state = $client->state;
-        }
-
-        if ($client->zip != '' && $client->zip != $clientToEdit->zip) {
-            $clientToEdit->zip = $client->zip;
+        foreach (get_object_vars($clientToEdit) as $key => $value) {
+            if (isset($client->$key) && $client->$key != '' && $client->$key != $clientToEdit->$key) {
+                $clientToEdit->$key = $client->$key;
+            }
         }
 
         return $this->repository->update($clientToEdit);
