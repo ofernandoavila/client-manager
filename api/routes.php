@@ -1,0 +1,14 @@
+<?php
+use Avilamidia\ClientManager\Core\BasicViewController;
+use Avilamidia\ClientManager\Core\Request;
+use Avilamidia\ClientManager\Core\Response;
+use Avilamidia\ClientManager\Core\View;
+
+global $router;
+
+$router->get('/', function(Request $request, Response $response) {
+    $response->SetView(new View('index'));
+
+    $response->AppendData("Welcome to the Avilamidia Lab! Here we try crazy things :D", "message");
+    $response->SetCode(200);
+});

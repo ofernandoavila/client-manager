@@ -1,0 +1,21 @@
+{
+    "name": "avilamidia/client-manager",
+    "autoload": {
+        "psr-4": {
+            "Avilamidia\\ClientManager\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Fernando Avila",
+            "email": "fernandoavilajunior@gmail.com"
+        }
+    ],
+    "require": {
+        "doctrine/orm": "^2.11.0",
+        "doctrine/dbal": "^3.2",
+        "symfony/yaml": "^5.4",
+        "symfony/cache": "^5.4",
+        "vlucas/phpdotenv": "^5.5"
+    }
+}
