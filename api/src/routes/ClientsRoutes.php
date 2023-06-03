@@ -46,16 +46,9 @@ $router->patch('/clients/edit', function (Request $request, Response $response) 
     $controller = new ClientController();
     $client = $controller->GetClientById(intval($request->data['client_id']));
 
-    $client = new Client();
+    $client = Map($request->data, Client::class);
 
     $client->id = $request->data['client_id'];
-    $client->name = $request->data['name'] ?? '';
-    $client->email = $request->data['email'] ?? '';
-    $client->phone = $request->data['phone'] ?? '';
-    $client->address = $request->data['address'] ?? '';
-    $client->city = $request->data['city'] ?? '';
-    $client->state = $request->data['state'] ?? '';
-    $client->zip = $request->data['zip'] ?? '';
 
     if ($client !== null) {
         if ($controller->EditClient($client)) {
