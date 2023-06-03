@@ -69,6 +69,26 @@ final class Request {
                 }
 
             return $data;
+
+            case 'DELETE':
+                $rawData = explode("?", str_replace($configs['prefix'], "", filter_var($_SERVER['REQUEST_URI'])));
+                $data = [];
+
+                if (isset($rawData[1])) {
+                    if ($rawData[1] != '') {
+                        foreach (explode("&", $rawData[1]) as $item) {
+                            $item = explode("=", $item);
+
+                            if (strpos($item[1], '%20')) {
+                                $item[1] = str_replace('%20', ' ', $item[1]);
+                            }
+
+                            $data[$item[0]] = $item[1];
+                        }
+                    }
+                }
+
+                return $data;
         }
     }
 }

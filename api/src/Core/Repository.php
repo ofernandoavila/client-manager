@@ -10,7 +10,7 @@ use Avilamidia\ClientManager\Helper\EntityManagerCreator;
 
 class Repository
 {
-    public EntityRepository $repository;
+    public string $repository;
     public ?EntityManager $entityManager = null;
 
     public function __construct(
@@ -19,7 +19,7 @@ class Repository
         global $em;
         
         $this->entityManager = $em;
-        $this->repository = $this->entityManager->getRepository($repositoryName);
+        $this->repository = $repositoryName;
     }
 
     public function save(object $obj)
@@ -37,26 +37,34 @@ class Repository
     }
 
     public function getCollectionBy(string $property, mixed $value) {
-        return $this->repository->findBy([$property => $value]);
+        return $this->entityManager->getRepository($this->repository)->findBy([$property => $value]);
     }
 
     public function getBy(string $property, mixed $value) {
-        return $this->repository->findOneBy([$property => $value]);
+        return $this->entityManager->getRepository($this->repository)->findOneBy([$property => $value]);
     }
 
     public function get($id)
     {
-        return $this->repository->find($id);
+        return $this->entityManager->getRepository($this->repository)->find($id);
     }
 
     public function getAll()
     {
-        return $this->repository->findAll();
+        return $this->entityManager->getRepository($this->repository)->findAll();
     }
 
-    public function update(object $obj)
+    public function update(object $obj):bool
     {
-        throw new \Exception("Este método deve ser sobrescrito!", 1);
+        try {
+            $this->entityManager->flush();
+
+            return true;
+        } catch (Exception $error) {
+            $_SESSION['msg']['type'] = "danger";
+            $_SESSION['msg']['text'] = $error->getMessage();
+            throw $error;
+        }
     }
 
     public function removeCollection($collection) {
@@ -68,14 +76,14 @@ class Repository
             }
 
             return $this->entityManager->flush();
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             throw $e;
         }
     }
 
     public function remove(object $obj) {
         try {
-            $obj = $this->entityManager->find(get_class($obj), $obj->id);
+            $obj = $this->entityManager->getRepository($this->repository)->find($obj->id);
 
             $this->entityManager->remove($obj);
             $this->entityManager->flush();
