@@ -22,7 +22,7 @@ class ClientController extends Controller {
         return $this->repository->remove($client);
     }
 
-    public function GetClientById(int $id):Client | null {
+    public function GetClientById(mixed $id):Client | null {
         return $this->repository->get($id);
     }
 
