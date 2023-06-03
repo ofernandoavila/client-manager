@@ -63,6 +63,7 @@ class Core {
 
         $configs = Config::GetConfigs();
 
+        require_once __DIR__ . '/../Helper/Map.php';
         require_once __DIR__ . '/../Helper/Debug.php';
         require_once __DIR__ . '/../Helper/Redirect.php';
 
