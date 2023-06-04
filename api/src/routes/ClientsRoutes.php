@@ -78,7 +78,7 @@ $router->patch('/clients/edit', function (Request $request, Response $response) 
     }
 });
 
-$router->delete('/clients/delete', function (Request $request, Response $response) {
+$router->get('/clients/delete', function (Request $request, Response $response) {
     $controller = new ClientController();
     $client = $controller->GetClientById(intval($request->data['client_id']));
 
