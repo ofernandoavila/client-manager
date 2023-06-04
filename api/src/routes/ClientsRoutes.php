@@ -33,7 +33,8 @@ $router->post('/clients/new', function (Request $request, Response $response) {
     $controller = new ClientController();
 
     if($controller->SaveClient($client)) {
-        $response->AppendData($client);
+        $response->AppendData("Client saved successfully!", 'message');
+        $response->AppendData("success", 'status');
         $response->SetCode(201);
     } else {
         $response->SetCode(500);
@@ -85,6 +86,7 @@ $router->get('/clients/delete', function (Request $request, Response $response) 
     if ($client !== null) {
         if ($controller->DeleteClient($client)) {
             $response->AppendData("The client '" . $client->name . "' was deleted!", 'message');
+            $response->AppendData("danger", 'status');
             $response->SetCode(200);
         } else {
             $response->SetCode(500);
