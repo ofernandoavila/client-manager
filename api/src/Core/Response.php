@@ -22,11 +22,9 @@ final class Response {
                 $this->data[$key] = $data;
             }
         } else if (is_object($data)) {
-            $key = get_class($data);
-            $key = explode('\\', $key);
-            $key = strtolower($key[sizeof($key) - 1]);
-
-            $this->data[$key] = $data;
+            foreach(get_object_vars($data) as $key => $value) {
+                $this->data[$key] = $value;
+            }
         } else if ($key != '') {
             $this->data[$key] = $data;
         } else {
