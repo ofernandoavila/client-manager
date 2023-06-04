@@ -17,6 +17,10 @@ class ClientController extends Controller {
         return $this->repository->save($client);
     }
 
+    public function GetAllClients() {
+        return $this->repository->getAll();
+    }
+
     public function DeleteClient(Client $client): bool
     {
         return $this->repository->remove($client);

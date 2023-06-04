@@ -6,6 +6,19 @@ use Avilamidia\ClientManager\Model\Client;
 
 global $router;
 
+$router->get('/clients', function (Request $request, Response $response) {
+    $controller = new ClientController();
+    $clients = $controller->GetAllClients();
+
+    if($clients != null) {
+        $response->AppendData($clients);
+        $response->SetCode(201);
+    } else {
+        $response->SetCode(404);
+        $response->AppendData("There is no clients in database", 'message');
+    }
+});
+
 $router->post('/clients/new', function (Request $request, Response $response) {
     $client = new Client();
 
