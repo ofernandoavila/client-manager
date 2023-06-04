@@ -20,7 +20,7 @@ final class Request {
 
         $apacheHeaders = apache_request_headers();
         
-        if(isset($apacheHeaders['Content-Type']) && $apacheHeaders['Content-Type'] == "application/json") {
+        if(isset($apacheHeaders['Content-Type']) && $apacheHeaders['Content-Type'] == "application/json" || $apacheHeaders['Referer'] == "http://localhost:3000/") {
             $this->isJson = true;
         }
         
