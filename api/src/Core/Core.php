@@ -11,6 +11,8 @@ class Core {
     public function __construct() {
         global $configs;
 
+        header("Access-Control-Allow-Origin: *");
+
         $this->config = $configs;
         $this->request = new Request();
         $this->response = new Response();
@@ -30,10 +32,11 @@ class Core {
             $this->request->config['global'] = $this->config;
 
             $this->request->route['function']($this->request, $this->response);
-
+            
             if($this->request->isJson) {
                 $this->response->SetResponseType('application/json');
                 echo json_encode($this->response->SendResponse());
+                return;
             } else {
                 if(isset($this->response->view)) {
                     $this->response->view->data = $this->response->SendResponse();
@@ -90,7 +93,7 @@ class Core {
         try {
             $core->Init();
         } catch (\Exception $e) {
-            Debug($e);
+            Response::PushResponseOut($core->request, $core->response);
         }
     }
 }
