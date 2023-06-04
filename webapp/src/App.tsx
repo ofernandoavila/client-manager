@@ -4,6 +4,7 @@ import { ClientsView } from './views/client/ClientsView';
 import CreateNewClientView from './views/client/CreateNewClientView';
 import { OrdersView } from './views/orders/OrdersView';
 import CreateNewOrderView from './views/orders/CreateNewOrderView';
+import ViewOrder from './views/orders/ViewOrder';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path='/orders' element={<OrdersView />} />
         <Route path='/clients/new' element={<CreateNewClientView />} />
         <Route path='/orders/new' element={<CreateNewOrderView />} />
+        <Route path='/orders/:orderId' element={<ViewOrder />} />
       </Routes>
     </Router>
   );

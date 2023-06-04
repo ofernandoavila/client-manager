@@ -1,3 +1,5 @@
+import { OrderType } from "./OrderType";
+
 export interface ClientType {
     id: number;
     name: string;
@@ -7,6 +9,6 @@ export interface ClientType {
     state: string;
     city: string;
     zip: string;
-    orders: any;
+    orders: Array<OrderType>;
 }
 

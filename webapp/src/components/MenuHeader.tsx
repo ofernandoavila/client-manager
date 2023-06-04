@@ -9,6 +9,7 @@ export default function MenuHeader() {
             </a>
             <nav className="my-2 my-md-0 mr-md-3">
                 <Link className="p-2 text-decoration-none text-white" to={'/clients'}>Clients</Link>
+                <Link className="p-2 text-decoration-none text-white" to={'/orders'}>Orders</Link>
             </nav>
             </div>
         </div>
