@@ -12,7 +12,7 @@ $router->get('/clients', function (Request $request, Response $response) {
 
     if($clients != null) {
         $response->AppendData($clients);
-        $response->SetCode(201);
+        $response->SetCode(200);
     } else {
         $response->SetCode(404);
         $response->AppendData("There is no clients in database", 'message');
