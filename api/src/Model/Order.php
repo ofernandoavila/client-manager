@@ -46,6 +46,9 @@ class Order {
 
     #[Column]
     public string $shippingZipCode;
+    
+    #[Column]
+    public string $orderHash;
 
     public function setClient(Client $client) {
         $this->client = $client;
