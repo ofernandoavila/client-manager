@@ -43,7 +43,22 @@ class Core {
                 }
             }
         } else {
+            
+            if($this->request->isJson) {
+                $this->response->SetResponseType('application/json');
+                $this->response->SetCode(404);
+                $this->response->AppendData("Current route was not found", 'error_message');
+                $this->response->AppendData($this->request->url, 'url');
+                $this->response->AppendData($this->request->data, 'data');
+                $this->response->AppendData($this->request->method, 'method');
+
+                echo json_encode($this->response->SendResponse());
+                return;
+            }
+
+            
             $controller = new BasicViewController();
+
             return $controller->Render('');
         }
 
