@@ -3,18 +3,9 @@ import CreateClientForm from "./forms/CreateClientForm";
 import MenuHeader from "./components/MenuHeader";
 import ClientGrid from "./views/client/components/ClientsGrid";
 
-type ClientType = {
-    id: number;
-    name: string;
-    email: string;
-    address: string;
-    phone: string;
-    state: string;
-    city: string;
-    zip: string;
-    orders: any;
-}
+import { ClientAPI } from "./api/ClientAPI";
 
+import { ClientType } from "./types/ClientType";
 
 function App() {
   const [clients, setClients] = useState<Array<ClientType>>([]);
@@ -23,17 +14,11 @@ function App() {
   const [alertMessage, setAlertMessage] = useState('');
 
   const fetchData = async () => {
-    await fetch("http://localhost:80/client-manager/api/clients", {
-      method: 'get',
-      mode: 'cors'
-    })
-    .then(res => res.json())
-    .then(data => {
-        setClients(data);
-        setIsLoaded(true);
-    });
+    let data = await ClientAPI.getClients();
+    setClients(data);
+    setIsLoaded(true);
   }
-
+  
   useEffect(() => {
     fetchData();
   }, []);
@@ -59,7 +44,7 @@ function App() {
               <CreateClientForm fetch={fetchData} alert={setAlertMessage} />
             </div>
             <div className="col-sm">
-              <ClientGrid clients={clients} />
+              <ClientGrid onFectch={fetchData} onAlert={setAlertMessage} clients={clients} />
             </div>
           </div>
         </div>
