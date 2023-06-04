@@ -1,32 +1,27 @@
 import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
+import { ClientAPI } from "../api/ClientAPI";
 
 type CreateClientFormPropsType = {
-    fetch: any;
-    alert: any;
 };
 
 export default function CreateClientForm(props: CreateClientFormPropsType) {
+
+    const navigate = useNavigate();
+
     async function createClient(event: any) {
         event.preventDefault();
 
-        await fetch("http://localhost:80/client-manager/api/clients/new", {
-            method: "post",
-            mode: "cors",
-            body: JSON.stringify({
-                name,
-                email,
-                phone,
-                address,
-                city,
-                state,
-                zip,
-            })
-        })
-        .then((res) => res.json())
-        .then((data) => {
-            props.fetch();
-
-            props.alert("The client '<b>" + name + "</b>' was created successfully!");
+        await ClientAPI.createNewClient({
+            name,
+            email,
+            phone,
+            address,
+            city,
+            state,
+            zip,
+        }).then(data => {
+            navigate('/clients', { state: { alert: data.message, alertType: data.status } });
         });
     }
 

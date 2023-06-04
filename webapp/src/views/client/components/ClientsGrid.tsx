@@ -14,7 +14,8 @@ type ClientType = {
 type ClientsGridPropsType = {
     clients?: Array<ClientType>;
     onFectch: any;
-    onAlert: any;
+    onAlert?: any;
+    onAlertStatus?: any;
 }
 
 export default function ClientGrid(props: ClientsGridPropsType) {
@@ -23,7 +24,10 @@ export default function ClientGrid(props: ClientsGridPropsType) {
         await ClientAPI.deleteClient(id)
             .then( data => {
                 props.onFectch();
-                props.onAlert(data.message);
+                if(props.onAlert) {
+                    props.onAlert(data.message);
+                    props.onAlertStatus(data.status);
+                }
             });
     }
 
@@ -34,7 +38,6 @@ export default function ClientGrid(props: ClientsGridPropsType) {
     }
     return(
         <>
-            <h2>Clients</h2>
             {  props.clients.length > 0 ? (
                 <table className="table">
                     <thead>
