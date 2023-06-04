@@ -48,4 +48,8 @@ class OrderController extends Controller
 
         return $this->repository->update($orderToEdit);
     }
+
+    public function GetAllOrders() {
+        return $this->repository->getAll();
+    }
 }

@@ -7,25 +7,41 @@ use Avilamidia\ClientManager\Model\Order;
 
 global $router;
 
+$router->get('/orders', function (Request $request, Response $response) {
+    $controller = new OrderController();
+
+    $orders = $controller->GetAllOrders();
+
+    if ($orders !== null) {
+        $response->AppendData($orders);
+        $response->SetCode(200);
+    } else {
+        $response->SetCode(404);
+        $response->AppendData("No orders founded", 'message');
+    }
+});
+
 $router->post('/orders/new', function (Request $request, Response $response) {
     $clientController = new ClientController();
 
-    $client = $clientController->GetClientById($request->data['client_id']);
+    $client = $clientController->GetClientById($request->data['clientId']);
     $order = new Order();
 
+    $order->orderHash = uniqid();
     $order->setClient($client);
     $order->amount = floatval($request->data['amount']);
-    $order->paymentType = $request->data['payment_type'];
-    $order->shippingMethod = $request->data['shipping_method'];
-    $order->shippingAddress = $request->data['shipping_address'];
-    $order->shippingCity = $request->data['shipping_city'];
-    $order->shippingState = $request->data['shipping_state'];
-    $order->shippingZipCode = $request->data['shipping_zip_code'];
+    $order->paymentType = $request->data['paymentType'];
+    $order->shippingMethod = $request->data['shippingMethod'];
+    $order->shippingAddress = $request->data['shippingAddress'];
+    $order->shippingCity = $request->data['shippingCity'];
+    $order->shippingState = $request->data['shippingState'];
+    $order->shippingZipCode = $request->data['shippingZipCode'];
 
     $orderController = new OrderController();
 
     if($orderController->SaveOrder($order)) {
-        $response->AppendData($order);
+        $response->AppendData("The order '" . $order->orderHash . "' was created!", 'message');
+        $response->AppendData("success", 'status');
         $response->SetCode(201);
     } else {
         $response->AppendData("An error occurred while saving", 'message');
@@ -71,7 +87,7 @@ $router->get('/orders/get', function (Request $request, Response $response) {
     }
 });
 
-$router->delete('/orders/delete', function (Request $request, Response $response) {
+$router->get('/orders/delete', function (Request $request, Response $response) {
     $controller = new OrderController();
 
     $order = $controller->GetOrderById($request->data['order_id']);
@@ -79,6 +95,7 @@ $router->delete('/orders/delete', function (Request $request, Response $response
     if ($order !== null) {
         if ($controller->DeleteOrder($order)) {
             $response->AppendData("The order '" . $request->data['order_id'] . "' was deleted!", 'message');
+            $response->AppendData("danger", 'status');
             $response->SetCode(200);
         } else {
             $response->SetCode(500);
