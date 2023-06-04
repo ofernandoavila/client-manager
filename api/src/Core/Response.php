@@ -50,7 +50,7 @@ final class Response {
         if($request->isJson) {
             $response->SetResponseType('application/json');
             $response->SetCode(404);
-            $response->AppendData("Current route was not found", 'error_message');
+            $response->AppendData("Current route was not found", 'message');
             $response->AppendData($request->url, 'url');
             $response->AppendData($request->data, 'data');
             $response->AppendData($request->method, 'method');

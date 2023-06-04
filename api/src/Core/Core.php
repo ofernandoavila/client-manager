@@ -54,6 +54,7 @@ class Core {
                 $this->response->AppendData($this->request->url, 'url');
                 $this->response->AppendData($this->request->data, 'data');
                 $this->response->AppendData($this->request->method, 'method');
+                $this->response->AppendData($this->request->isJson, 'isJson');
 
                 echo json_encode($this->response->SendResponse());
                 return;
@@ -93,6 +94,9 @@ class Core {
         try {
             $core->Init();
         } catch (\Exception $e) {
+            $core->request->data['error']['code'] = $e->getCode();
+            $core->request->data['error']['message'] = $e->getMessage();
+
             Response::PushResponseOut($core->request, $core->response);
         }
     }
