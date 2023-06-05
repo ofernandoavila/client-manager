@@ -24,6 +24,7 @@ export default function ClientSelect(props: ClientSelectPropsType) {
 
     useEffect(() => {
         fetchData();
+
     }, []);
     
     if(!clients) {
@@ -37,11 +38,19 @@ export default function ClientSelect(props: ClientSelectPropsType) {
             Client
             </label>
             <select onChange={selectClient} id="client-list-select" className={props.required ? 'form-control  my-2 required' : 'form-control  my-2' } required={props.required}>
-                { clients.map( client => (
-                    client.id === props.clientId 
-                        ? <option key={client.id} value={client.id} selected>{client.id} - {client.name}</option> 
-                        : <option key={client.id} value={client.id}>{client.id} - {client.name}</option>
-                ) ) }
+                { clients.map( client => {
+                    if(clients.length == 1) {
+                        props.onSelect(client.id);
+                        return <option value={client.id} selected>{client.id} - {client.name}</option>;
+                    } else {
+                        return (
+                            client.id === props.clientId 
+                                ? <option key={client.id} value={client.id} selected>{client.id} - {client.name}</option> 
+                                : <option key={client.id} value={client.id}>{client.id} - {client.name}</option>
+                        )  
+                    }
+                  })
+                }
             </select>
         </>
     );
