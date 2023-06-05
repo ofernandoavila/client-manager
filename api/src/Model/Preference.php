@@ -25,9 +25,17 @@ class Preference {
     #[Column]
     public bool $isFromSystem;
 
+    #[Column]
+    public string $initialValue;
+
     #[PrePersist]
     public function setPreferenceslug() {
         $slug = str_replace(" ", "-", strtolower($this->name));
         $this->slug = $slug;
+    }
+
+    #[PrePersist]
+    public function setInitialValue() {
+        $this->initialValue = $this->value;
     }
 }

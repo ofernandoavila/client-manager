@@ -14,6 +14,7 @@ $router->get('/', function(Request $request, Response $response) {
 });
 
 require __DIR__ . '/src/routes/ClientsRoutes.php';
+require __DIR__ . '/src/routes/SystemRoutes.php';
 require __DIR__ . '/src/routes/OrdersRoutes.php';
 require __DIR__ . '/src/routes/UserRoutes.php';
 require __DIR__ . '/src/routes/PreferencesRoutes.php';

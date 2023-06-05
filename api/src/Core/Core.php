@@ -69,7 +69,7 @@ class Core {
     }
 
     public static function StartUpProject($applicationMode = 'dev') {
-        global $router, $core, $configs, $applicationMode, $em;
+        global $router, $core, $configs, $applicationMode, $em, $system;
         date_default_timezone_set('America/Sao_Paulo');
 
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../config');
@@ -81,6 +81,8 @@ class Core {
         session_regenerate_id();
 
         $configs = Config::GetConfigs();
+
+        $system - new System();
 
         require_once __DIR__ . '/../Helper/Map.php';
         require_once __DIR__ . '/../Helper/Debug.php';
