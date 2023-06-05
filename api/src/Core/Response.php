@@ -22,8 +22,12 @@ final class Response {
                 $this->data[$key] = $data;
             }
         } else if (is_object($data)) {
-            foreach(get_object_vars($data) as $key => $value) {
-                $this->data[$key] = $value;
+            if($key == '') {
+                foreach(get_object_vars($data) as $key => $value) {
+                    $this->data[$key] = $value;
+                }
+            } else {
+                $this->data[$key] = $data;
             }
         } else if ($key != '') {
             $this->data[$key] = $data;

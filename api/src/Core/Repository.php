@@ -2,11 +2,8 @@
 
 namespace Avilamidia\ClientManager\Core;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityRepository;
 use Exception;
-use Avilamidia\ClientManager\Helper\EntityManagerCreator;
 
 class Repository
 {
@@ -30,8 +27,6 @@ class Repository
 
             return true;
         } catch(Exception $error) {
-            $_SESSION['msg']['type'] = "danger";
-            $_SESSION['msg']['text'] = $error->getMessage();
             throw $error;
         }
     }
@@ -61,8 +56,6 @@ class Repository
 
             return true;
         } catch (Exception $error) {
-            $_SESSION['msg']['type'] = "danger";
-            $_SESSION['msg']['text'] = $error->getMessage();
             throw $error;
         }
     }
