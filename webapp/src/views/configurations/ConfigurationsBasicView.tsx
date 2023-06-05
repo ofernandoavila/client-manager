@@ -15,7 +15,12 @@ export default function ConfigurationsBasicView(props: ConfigurationsPropsType) 
         {
             label: "Preferences",
             path: '/configurations/preferences'
-        }, {
+        }, 
+        {
+            label: "Features",
+            path: '/configurations/features'
+        },
+        {
             label: "Users",
             path: '/configurations/users'
         }
