@@ -9,6 +9,9 @@ export interface ModalPropsType {
     onCancelLabel?: string;
     onConfirm?: any;
     onCancel?: any;
+    content?: boolean;
+    children?: any;
+    size?: "sm" | "lg" | "xl" | undefined;
 }
 
 export default function Modal (props: ModalPropsType) {
@@ -16,6 +19,9 @@ export default function Modal (props: ModalPropsType) {
 
     const HandleCloseModal = (event: any) => {
         event.preventDefault();
+        if(props.onCancel) {
+            props.onCancel(false);
+        }
         setIsOpen(false);
     };
 
@@ -24,6 +30,21 @@ export default function Modal (props: ModalPropsType) {
             setIsOpen(props.isOpen);
         }
     },[props.isOpen]);
+
+    if(props.content) {
+        return (
+            <BootstrapModal size={props.size} show={isOpen} centered aria-labelledby="contained-modal-title-vcenter">
+                <BootstrapModal.Header>
+                    <BootstrapModal.Title>{ props.type }</BootstrapModal.Title>
+                </BootstrapModal.Header>
+                <BootstrapModal.Body>{ props.children }</BootstrapModal.Body>
+                <BootstrapModal.Footer>
+                    <Button variant="secondary" onClick={HandleCloseModal}>{ props.onCancelLabel ?? 'Close' }</Button>
+                    { props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : ''}
+                </BootstrapModal.Footer>
+            </BootstrapModal>
+        );
+    }
     
     return (
         <BootstrapModal show={isOpen} centered aria-labelledby="contained-modal-title-vcenter">
@@ -32,8 +53,7 @@ export default function Modal (props: ModalPropsType) {
             </BootstrapModal.Header>
             <BootstrapModal.Body>{ props.text }</BootstrapModal.Body>
             <BootstrapModal.Footer>
-                { !props.onCancel ? ( <Button variant="secondary" onClick={HandleCloseModal}>Close</Button> ) :
-                ( <Button variant="secondary" onClick={props.onCancel}>{ props.onCancelLabel ?? 'Close' }</Button> )}
+                <Button variant="secondary" onClick={HandleCloseModal}>{ props.onCancelLabel ?? 'Close' }</Button>
                 { props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : ''}
             </BootstrapModal.Footer>
         </BootstrapModal>

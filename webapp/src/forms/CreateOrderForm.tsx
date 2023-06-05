@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { OrdersAPI } from "../api/OrdersAPI";
-import ClientSelect from "./ClientSelect";
+import ClientSelect from "../views/client/components/ClientSelect";
 import { useNavigate } from "react-router-dom";
-import { OrderType } from "../types/OrderType";
+import { OrderAPI } from "../helpers/Api";
 
 export default function CreateOrderForm() {
     const navigate = useNavigate();
@@ -25,21 +24,9 @@ export default function CreateOrderForm() {
         console.log(isValid);
         if(!isValid) return false;
 
-        console.log(
-            {
-                clientId: clientId,
-                amount: parseFloat(amount),
-                status: status,
-                paymentType: paymentType,
-                shippingMethod: shippingMethod,
-                shippingAddress: shippingAddress,
-                shippingCity: shippingCity,
-                shippingState: shippingState,
-                shippingZipCode: shippingZipCode
-            }
-        );
+        const api = new OrderAPI();
 
-        await OrdersAPI.createOrder({
+        await api.create({
             clientId: clientId,
             amount: parseFloat(amount),
             status: status,

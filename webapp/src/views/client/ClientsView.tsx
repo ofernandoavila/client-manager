@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import BasicView from "../BasicView";
 import ClientGrid from "./components/ClientsGrid";
-import { ClientType } from "../../types/ClientType";
-import { ClientAPI } from "../../api/ClientAPI";
 import { Link, useLocation } from 'react-router-dom';
 import Alert from "../../components/Alert";
 
 export function ClientsView() {
-    const [clients, setClients] = useState<Array<ClientType>>([]);
-
     const { state } = useLocation();
 
     const [alertMessage, setAlertMessage] = useState('');
@@ -24,14 +20,7 @@ export function ClientsView() {
                 setAlertStatus(state.alertType);
             }
         }
-
-        fetchData();
     }, []);
-
-    const fetchData = async () => {
-        let data = await ClientAPI.getClients();
-        setClients(data);
-    }
 
     return (
         <BasicView>
@@ -43,10 +32,8 @@ export function ClientsView() {
                 </Link>
             </div>
             <ClientGrid
-                onFectch={fetchData}
                 onAlert={setAlertMessage}
                 onAlertStatus={setAlertStatus}
-                clients={clients}
             />
         </BasicView>
     );

@@ -1,29 +1,32 @@
-import { ClientAPI } from "../../../api/ClientAPI";
-
-type ClientType = {
-    id: number;
-    name: string;
-    email: string;
-    address: string;
-    phone: string;
-    state: string;
-    city: string;
-    zip: string;
-}
+import { useEffect, useState } from "react";
+import { ClientAPI } from "../../../helpers/Api";
+import { Client } from "../../../types/ContextTypes";
 
 type ClientsGridPropsType = {
-    clients?: Array<ClientType>;
-    onFectch: any;
     onAlert?: any;
     onAlertStatus?: any;
 }
 
 export default function ClientGrid(props: ClientsGridPropsType) {
 
+    const [clients, setClients] = useState<Client[]>();
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = async () => {
+        let api = new ClientAPI();
+        await api.getAll()
+            .then(data => {
+                setClients(data.clients);
+            });
+    }
+
     async function DeleteClient(id: number) {
-        await ClientAPI.deleteClient(id)
-            .then( data => {
-                props.onFectch();
+        let api = new ClientAPI();
+        await api.delete(id.toString())
+            .then(data => {
                 if(props.onAlert) {
                     props.onAlert(data.message);
                     props.onAlertStatus(data.status);
@@ -31,14 +34,14 @@ export default function ClientGrid(props: ClientsGridPropsType) {
             });
     }
 
-    if(!props.clients) {
+    if(!clients) {
         return (
             <span>There is no clients to show</span>
         );
     }
     return(
         <>
-            {  props.clients.length > 0 ? (
+            {  clients.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -50,7 +53,7 @@ export default function ClientGrid(props: ClientsGridPropsType) {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.clients.map( item => (
+                        {clients.map( item => (
                             <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{ item.name }</td>
@@ -60,7 +63,7 @@ export default function ClientGrid(props: ClientsGridPropsType) {
                                     <div className="btn-group">
                                         <button type="button" className="btn btn-sm btn-outline-secundary">View</button>
                                         <button type="button" className="btn btn-sm btn-outline-secundary">Edit</button>
-                                        <button type="button" onClick={() => DeleteClient(item.id)} className="btn btn-sm btn-outline-secundary">Delete</button>
+                                        <button type="button" onClick={() => DeleteClient(item.id!)} className="btn btn-sm btn-outline-secundary">Delete</button>
                                     </div>
                                 </td>
                             </tr>

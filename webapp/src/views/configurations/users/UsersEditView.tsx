@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { UsersAPI } from "../../../api/UsersAPI";
 import UsersBasicView from "./UsersBasicView";
 import UserForm from "./forms/UserForm";
-import { UserType } from "../../../types/UserType";
+import { UserAPI } from "../../../helpers/Api";
+import { User } from "../../../types/ContextTypes";
 
 export default function UsersEditView() {
     const { userHash } = useParams();
 
-    const [user, setUser] = useState<UserType>();
+    const [user, setUser] = useState<User>();
 
     const fetchData = async () => {
-        await UsersAPI.get(userHash!)
+        await UserAPI.prototype.get(userHash!)
             .then( data => {
                 setUser(data.user);
             });

@@ -1,9 +1,10 @@
-import { PreferencesAPI } from "../api/PreferencesAPI"
-import { PreferenceType } from "../types/PreferenceType";
+import { Preference } from "../types/ContextTypes";
+import { Api, PreferenceAPI } from "./Api";
 
 export const PreferencesHelper = {
-    GetPreference: async (slug: string):Promise<PreferenceType> => {
-        return await PreferencesAPI.get(slug)
+    api: new PreferenceAPI(),
+    GetPreference: async (slug: string):Promise<Preference> => {
+        return await PreferencesHelper.api.get(slug)
             .then(data => {
                 return data.preference!;
             });

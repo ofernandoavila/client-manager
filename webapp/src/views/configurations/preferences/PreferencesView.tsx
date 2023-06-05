@@ -1,21 +1,19 @@
 import { Link, useLocation } from "react-router-dom";
-import BasicView from "../../BasicView";
-import ConfigurationsMenu from "../ConfigurationsMenu";
 import PreferencesGrid from "./forms/PreferencesGrid";
 import { useEffect, useState } from "react";
-import { PreferenceType } from "../../../types/PreferenceType";
-import { PreferencesAPI } from "../../../api/PreferencesAPI";
 import PreferencesBasicView from "./PreferencesBasicView";
 import Alert from "../../../components/Alert";
+import { PreferenceAPI } from "../../../helpers/Api";
+import { Preference } from "../../../types/ContextTypes";
 
 export default function PreferencesView() {
 
-    const [preferences, setPreferences] = useState<Array<PreferenceType> | null>(null);
+    const [preferences, setPreferences] = useState<Preference[] | null>(null);
 
     const { state } = useLocation();
 
     const fetchData = async () => {
-        await PreferencesAPI.getAll()
+        await PreferenceAPI.prototype.getAll()
             .then( data => {
                 setPreferences(data.preferences!);
             });

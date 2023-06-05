@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { ClientType } from "../types/ClientType";
-import { ClientAPI } from "../api/ClientAPI";
+import { Form } from "react-bootstrap";
+import { ClientAPI } from "../../../helpers/Api";
+import { Client } from "../../../types/ContextTypes";
 
 interface ClientSelectPropsType {
     onSelect: any;
@@ -10,11 +11,12 @@ interface ClientSelectPropsType {
 
 export default function ClientSelect(props: ClientSelectPropsType) {
 
-    const [clients, setClients] = useState<Array<ClientType> | null>(null);
+    const [clients, setClients] = useState<Client[]>();
 
     const fetchData = async () => {
-        await ClientAPI.getClients()
-            .then(data => setClients(data));
+        const api = new ClientAPI();
+        await api.getAll()
+            .then(data => setClients(data.clients));
     }
 
     const selectClient = (event: any) => {
@@ -34,10 +36,19 @@ export default function ClientSelect(props: ClientSelectPropsType) {
     return (
         <>
             <label htmlFor="client-list-select"> 
-            { props.required ? <span className="text-danger">* </span> : '' }
-            Client
+                { props.required ? <span className="text-danger">* </span> : '' }
+                Client
             </label>
-            <select onChange={selectClient} id="client-list-select" className={props.required ? 'form-control  my-2 required' : 'form-control  my-2' } required={props.required}>
+            <Form.Select
+                onChange={selectClient} 
+                id="client-list-select" 
+                className={
+                    props.required ? 
+                    'form-control  my-2 required' : 
+                    'form-control  my-2' 
+                } 
+                required={props.required}
+            >
                 { clients.map( client => {
                     if(clients.length == 1) {
                         props.onSelect(client.id);
@@ -49,9 +60,10 @@ export default function ClientSelect(props: ClientSelectPropsType) {
                                 : <option key={client.id} value={client.id}>{client.id} - {client.name}</option>
                         )  
                     }
-                  })
+                    })
                 }
-            </select>
+            </Form.Select>
+        
         </>
     );
 }

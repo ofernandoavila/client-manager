@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { UserType } from "../../../../types/UserType";
-import { UsersAPI } from "../../../../api/UsersAPI";
+import { UserAPI } from "../../../../helpers/Api";
+import { User } from "../../../../types/ContextTypes";
+import { useEffect, useState } from "react";
 
 interface UsersGridPropsType {
-    users: Array<UserType> | null;
+    users: Array<User> | null;
     onAlert?: any;
     onAlertStatus?: any;
     onFetch?: any;
@@ -11,8 +12,19 @@ interface UsersGridPropsType {
 
 export default function UsersGrid(props: UsersGridPropsType) {
 
+    const [users, setUsers] = useState<User[]>();
+
+    const fetchData = async () => {
+        const api = new UserAPI();
+        return await api.getAll()
+            .then( data => {
+                setUsers(data.users);
+            })
+    };
+
     async function DeleteItem(userHash: string) {
-        return await UsersAPI.delete(userHash)
+        const api = new UserAPI();
+        return await api.delete(userHash)
             .then(data => {
                 if (props.onAlertStatus) {
                     props.onAlertStatus('danger');
@@ -26,11 +38,15 @@ export default function UsersGrid(props: UsersGridPropsType) {
             });
     }
 
-    if(!props.users) return (<></>);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    if(!users) return (<></>);
 
     return (
         <>
-            {  props.users.length > 0 ? (
+            {  users.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -42,7 +58,7 @@ export default function UsersGrid(props: UsersGridPropsType) {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.users.map( item => (
+                        {users.map( item => (
                             <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{ item.name }</td>

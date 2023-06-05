@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { Formatter } from "../../../helpers/Formatter";
 import { PreferencesHelper } from "../../../helpers/PreferencesHelper";
-import { OrderType } from "../../../types/OrderType";
+import { Order } from "../../../types/ContextTypes";
 
 interface OrderCardPropsType {
-    order: OrderType;
+    order: Order;
 }
 
 export default function OrderCard(props: OrderCardPropsType) {

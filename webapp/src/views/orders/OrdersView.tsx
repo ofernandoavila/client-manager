@@ -2,13 +2,9 @@ import { useEffect, useState } from "react";
 import BasicView from "../BasicView";
 import { Link, useLocation } from 'react-router-dom';
 import Alert from "../../components/Alert";
-import { OrderType } from "../../types/OrderType";
-import { OrdersAPI } from "../../api/OrdersAPI";
 import OrdersGrid from "./components/OrdersGrid";
-import { PreferencesHelper } from "../../helpers/PreferencesHelper";
 
 export function OrdersView() {
-    const [orders, setOrders] = useState<Array<OrderType>>([]);
 
     const { state } = useLocation();
 
@@ -26,14 +22,7 @@ export function OrdersView() {
                 setAlertStatus(state.alertType);
             }
         }
-
-        fetchData();
     }, []);
-
-    const fetchData = async () => {
-        let data = await OrdersAPI.getOrders();
-        setOrders(data);
-    }
 
     return (
         <BasicView>
@@ -44,7 +33,7 @@ export function OrdersView() {
                     <button className="btn btn-primary" >Create new order</button>
                 </Link>
             </div>
-            <OrdersGrid orders={orders} onAlert={setAlertMessage} onAlertStatus={setAlertStatus} onFetch={fetchData} />
+            <OrdersGrid onAlert={setAlertMessage} onAlertStatus={setAlertStatus} />
         </BasicView>
     );
 }

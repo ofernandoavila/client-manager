@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ConfigurationTabsView from "../../ConfigurationTabsView";
-import ConfigurationsBasicView from "../../ConfigurationsBasicView";
+import ConfigurationsBasicView from "../../components/ConfigurationsBasicView";
 import Alert from "../../../../components/Alert";
 import { Link } from "react-router-dom";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { ClientAPI } from "../api/ClientAPI";
+import { ClientAPI } from "../../../helpers/Api";
 
 type CreateClientFormPropsType = {
 };
@@ -12,14 +12,15 @@ export default function CreateClientForm(props: CreateClientFormPropsType) {
     async function createClient(event: any) {
         event.preventDefault();
 
-        await ClientAPI.createNewClient({
+        const api = new ClientAPI();
+        await api.create({
             name,
             email,
             phone,
             address,
             city,
             state,
-            zip,
+            zip
         }).then(data => {
             navigate('/clients', { state: { alert: data.message, alertType: data.status } });
         });

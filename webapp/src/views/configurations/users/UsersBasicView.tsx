@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import ConfigurationsBasicView from "../ConfigurationsBasicView";
+import ConfigurationsBasicView from "../components/ConfigurationsBasicView";
 
 export interface UsersBasicViewPropsType {
     children: any;

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormHelper } from "../../../../helpers/FormHelper";
-import { PreferencesAPI, PreferencesAPIResponseType } from "../../../../api/PreferencesAPI";
-import { PreferenceType } from "../../../../types/PreferenceType";
+import { PreferenceAPI } from "../../../../helpers/Api";
+import { Preference } from "../../../../types/ContextTypes";
 
 export interface PreferenceFormPropsType {
-    preference?: PreferenceType;
+    preference?: Preference;
     edit?: boolean;
 }
 
@@ -15,10 +15,10 @@ export default function PreferenceForm(props: PreferenceFormPropsType) {
     async function createPreference() {
         if (!FormHelper.ValidateForm()) return false;
 
-        await PreferencesAPI.create({
+        await PreferenceAPI.prototype.create({
             name,
             value
-        }).then( (data: PreferencesAPIResponseType) => {
+        }).then( data => {
             navigate("/configurations/preferences", { state: { alert: data.message, alertType: 'success' } });
         });
     }
@@ -26,11 +26,11 @@ export default function PreferenceForm(props: PreferenceFormPropsType) {
     async function editPreference() {
         if (!FormHelper.ValidateForm()) return false;
 
-        await PreferencesAPI.edit({
+        await PreferenceAPI.prototype.edit({
             slug: props.preference!.slug,
             name: props.preference!.name,
             value: value
-        }).then( (data: PreferencesAPIResponseType) => {
+        }).then( data => {
             navigate("/configurations/preferences", { state: { alert: data.message, alertType: 'success' } });
         });
     }

@@ -1,8 +1,5 @@
-import { useState } from "react";
-import CreateClientForm from "../../forms/CreateClientForm";
+import CreateClientForm from "./components/CreateClientForm";
 import BasicView from "../BasicView";
-import { ClientType } from "../../types/ClientType";
-import { ClientAPI } from "../../api/ClientAPI";
 
 export default function CreateNewClientView() {    
     return (

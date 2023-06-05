@@ -9,6 +9,7 @@ export default function MenuHeader() {
     const fetchData = async () => {
         await PreferencesHelper.GetPreference('corporation-name')
             .then(data => {
+                console.log(data!);
                 if(typeof data.value == 'string') {
                     setTitle(data.value);
                 }

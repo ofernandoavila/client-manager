@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FormHelper } from "../../../../helpers/FormHelper";
-import { UsersAPI, UsersAPIResponseType } from "../../../../api/UsersAPI";
-import { UserType } from "../../../../types/UserType";
 import Alert from "../../../../components/Alert";
+import { User } from "../../../../types/ContextTypes";
+import { UserAPI } from "../../../../helpers/Api";
 
 export interface UserFormPropsType {
-    user?: UserType;
+    user?: User;
     edit?: boolean;
 }
 
@@ -21,12 +21,12 @@ export default function UserForm(props: UserFormPropsType) {
             return false;
         }
 
-        await UsersAPI.create({
+        await UserAPI.prototype.create({
             name,
             username,
             email,
             password
-        }).then( (data: UsersAPIResponseType) => {
+        }).then( data => {
             navigate("/configurations/users", { state: { alert: data.message, alertType: 'success' } });
         });
     }
@@ -34,12 +34,12 @@ export default function UserForm(props: UserFormPropsType) {
     async function editUser() {
         if (!FormHelper.ValidateForm()) return false;
 
-        await UsersAPI.edit({
+        await UserAPI.prototype.edit({
             name,
             username,
             email,
             userHash
-        }).then( (data: UsersAPIResponseType) => {
+        }).then( data => {
             navigate("/configurations/users", { state: { alert: data.message, alertType: 'success' } });
         });
     }

@@ -1,7 +1,7 @@
-import { ClientType } from "../../../types/ClientType";
+import { Client } from "../../../types/ContextTypes";
 
 interface ClientCardPropsType {
-    client: ClientType;
+    client: Client;
 }
 
 export default function ClientCard(props: ClientCardPropsType) {

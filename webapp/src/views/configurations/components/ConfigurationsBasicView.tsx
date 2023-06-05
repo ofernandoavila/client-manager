@@ -1,4 +1,4 @@
-import BasicView from "../BasicView";
+import BasicView from "../../BasicView";
 import ConfigurationsMenu from "./ConfigurationsMenu";
 
 export interface ConfigurationsPropsType {

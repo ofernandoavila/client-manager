@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
-import { PreferenceType } from "../../../../types/PreferenceType";
-import { PreferencesAPI } from "../../../../api/PreferencesAPI";
+import { PreferenceAPI } from "../../../../helpers/Api";
+import { Preference } from "../../../../types/ContextTypes";
+import { useEffect, useState } from "react";
 
 interface PreferencesGridPropsType {
-    preferences: Array<PreferenceType> | null;
+    preferences: Array<Preference> | null;
     onAlert?: any;
     onAlertStatus?: any;
     onFetch?: any;
@@ -11,8 +12,22 @@ interface PreferencesGridPropsType {
 
 export default function PreferencesGrid(props: PreferencesGridPropsType) {
 
+    const [preferences, setPreferences] = useState<Preference[]>();
+
+    const fetchData = async () => {
+        const api = new PreferenceAPI();
+        return await api.getAll()
+                .then(data => {
+                    setPreferences(data.preferences!);
+                });
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
     async function DeleteItem(slug: string) {
-        return await PreferencesAPI.delete(slug)
+        return await PreferenceAPI.prototype.delete(slug)
             .then(data => {
                 if (props.onAlertStatus) {
                     props.onAlertStatus('danger');
@@ -26,11 +41,11 @@ export default function PreferencesGrid(props: PreferencesGridPropsType) {
             });
     }
 
-    if(!props.preferences) return (<></>);
+    if(!preferences) return (<></>);
 
     return (
         <>
-            {  props.preferences.length > 0 ? (
+            {  preferences.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -42,7 +57,7 @@ export default function PreferencesGrid(props: PreferencesGridPropsType) {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.preferences.map( item => (
+                        { preferences.map( item => (
                             <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{ item.name }</td>
