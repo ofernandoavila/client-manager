@@ -84,6 +84,7 @@ class Core {
 
         $system = new System();
 
+        require_once __DIR__ . '/../Helper/SlugFormatter.php';
         require_once __DIR__ . '/../Helper/Map.php';
         require_once __DIR__ . '/../Helper/Debug.php';
         require_once __DIR__ . '/../Helper/Redirect.php';

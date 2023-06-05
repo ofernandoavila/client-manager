@@ -13,6 +13,7 @@ $router->get('/', function(Request $request, Response $response) {
     $response->SetCode(200);
 });
 
+require __DIR__ . '/src/routes/FeaturesRoutes.php';
 require __DIR__ . '/src/routes/ClientsRoutes.php';
 require __DIR__ . '/src/routes/SystemRoutes.php';
 require __DIR__ . '/src/routes/OrdersRoutes.php';

@@ -91,4 +91,16 @@ final class Request {
                 return $data;
         }
     }
+
+    public static function ValidateRequestFields(Request $request, array $fields) {
+        $valid = true;
+
+        foreach($fields as $field) {
+            if(!isset($request->data[$field])) {
+                $valid = false;
+            }
+        }
+
+        return $valid;
+    }
 }
