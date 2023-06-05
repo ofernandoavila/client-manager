@@ -10,7 +10,7 @@ class SystemController {
         $preferences = PreferenceController::GetAllPreferences();
 
         foreach($preferences as $preference) {
-            PreferenceController::DeletePreferenceBySlug($preference, true);
+            PreferenceController::DeletePreferenceBySlug($preference->slug, true);
         }
 
         foreach($system->getPreferencesFromSystem() as $systemPreference) {

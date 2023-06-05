@@ -82,7 +82,7 @@ class Core {
 
         $configs = Config::GetConfigs();
 
-        $system - new System();
+        $system = new System();
 
         require_once __DIR__ . '/../Helper/Map.php';
         require_once __DIR__ . '/../Helper/Debug.php';
