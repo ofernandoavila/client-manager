@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { FeatureType } from "../../../types/FeatureType";
-import FeatureBasicView from "./FeatureBasicView";
+import { FeatureType } from "./types/FeatureType";
+import FeatureBasicView from "./components/FeatureBasicView";
 import FeaturesGrid from "./components/FeaturesGrid";
-import { FeatureAPI } from "../../../api/FeatureAPI";
+import { FeatureAPI } from "./api/FeatureAPI";
 
 export default function FeaturesView() {
     const [features, setFeatures] = useState<Array<FeatureType> | null>(null);

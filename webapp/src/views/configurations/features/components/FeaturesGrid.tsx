@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { FeatureType } from "../../../../types/FeatureType";
-import { FeatureAPI } from "../../../../api/FeatureAPI";
+import { FeatureType } from "../types/FeatureType";
+import { FeatureAPI } from "../api/FeatureAPI";
 
 interface FeaturesGridPropsType {
     features: Array<FeatureType> | null;
@@ -49,7 +49,7 @@ export default function FeaturesGrid(props: FeaturesGridPropsType) {
                                 <td>{ item.slug }</td>
                                 <td>
                                     <div className="btn-group">
-                                        <Link to={'/configurations/preferences/edit/' + item.slug } ><button type="button" className="btn btn-sm btn-outline-secundary">Edit</button></Link>
+                                        <Link to={'/configurations/features/edit/' + item.slug } ><button type="button" className="btn btn-sm btn-outline-secundary">Edit</button></Link>
                                     </div>
                                 </td>
                             </tr>

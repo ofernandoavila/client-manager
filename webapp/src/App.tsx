@@ -13,6 +13,7 @@ import PreferencesEditView from './views/configurations/preferences/PreferencesE
 import UsersNewView from './views/configurations/users/UsersNewView';
 import UsersEditView from './views/configurations/users/UsersEditView';
 import FeaturesView from './views/configurations/features/FeatureView';
+import FeaturesEditView from './views/configurations/features/FeatureEditView';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path='/configurations/preferences/edit/:preferenceSlug' element={<PreferencesEditView />} />
 
         <Route path='/configurations/features' element={<FeaturesView />} />
+        <Route path='/configurations/features/edit/:featureSlug' element={<FeaturesEditView />} />
 
         <Route path='/clients/new' element={<CreateNewClientView />} />
         <Route path='/orders/new' element={<CreateNewOrderView />} />
