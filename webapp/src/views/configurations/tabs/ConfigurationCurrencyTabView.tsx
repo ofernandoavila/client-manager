@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { SystemAPI } from "../../../api/SystemAPI";
 import PopUp from "../../../components/Modal";
+import { Link } from "react-router-dom";
 
 export interface ConfigurationCurrencyTabViewType {
     onAlertMessage?: any;
@@ -25,7 +26,10 @@ export default function ConfigurationCurrencyTabView(props: ConfigurationCurrenc
 
     return (
         <div className="row pt-4">
-            <h3>Currencies</h3>
+            <div className="d-flex justify-content-between mb-4">
+                <h3>Currencies</h3>
+                <Link to={'/configurations/features/new'}> <button className="btn btn-primary">Create new currency</button> </Link>
+            </div>
         </div>
     );
 }
