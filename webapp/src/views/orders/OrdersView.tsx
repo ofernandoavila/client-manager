@@ -5,6 +5,7 @@ import Alert from "../../components/Alert";
 import { OrderType } from "../../types/OrderType";
 import { OrdersAPI } from "../../api/OrdersAPI";
 import OrdersGrid from "./components/OrdersGrid";
+import { PreferencesHelper } from "../../helpers/PreferencesHelper";
 
 export function OrdersView() {
     const [orders, setOrders] = useState<Array<OrderType>>([]);
@@ -15,6 +16,7 @@ export function OrdersView() {
     const [alertStatus, setAlertStatus] = useState('');
 
     useEffect(() => {
+
         if(state != null) {
             if(state.alert != null) {
                 setAlertMessage(state.alert);

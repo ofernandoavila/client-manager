@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { OrdersAPI } from "../../../api/OrdersAPI";
 import { OrderType } from "../../../types/OrderType";
+import { useState, useEffect } from "react";
+import { PreferencesHelper } from "../../../helpers/PreferencesHelper";
+import { Formatter } from "../../../helpers/Formatter";
 
 interface OrderGridPropsType {
     orders: Array<OrderType> | null;
@@ -10,6 +13,9 @@ interface OrderGridPropsType {
 }
 
 export default function OrdersGrid(props: OrderGridPropsType) {
+
+    const [decimalSeparator, setDecimalSeparator] = useState('');
+    const [currency, setCurrency] = useState('');
 
     async function DeleteOrder(id: number) {
         await OrdersAPI.deleteOrder(id)
@@ -21,6 +27,18 @@ export default function OrdersGrid(props: OrderGridPropsType) {
                 }
             });
     }
+
+    const FetchData= async () => {
+        let currency = await PreferencesHelper.GetPreference('currency');
+        setCurrency(currency.value);
+
+        let decimalSeparator = await PreferencesHelper.GetPreference('decimal-separator');
+        setDecimalSeparator(decimalSeparator.value);
+    }
+
+    useEffect(() => {
+        FetchData();
+    }, []);
 
     if(!props.orders) return (<></>);
 
@@ -45,7 +63,7 @@ export default function OrdersGrid(props: OrderGridPropsType) {
                                 <td>{ item.client!.name }</td>
                                 <td>{ item.shippingAddress }</td>
                                 <td>{ item.paymentType }</td>
-                                <td>R$ { item.amount }</td>
+                                <td>{ Formatter.Currency(item.amount, currency, decimalSeparator) }</td>
                                 <td>
                                     <div className="btn-group">
                                         <Link to={'/orders/' + item.id } ><button type="button" className="btn btn-sm btn-outline-secundary">View</button></Link>
