@@ -23,6 +23,26 @@ $router->get('/features', function (Request $request, Response $response) {
     }
 });
 
+$router->get('/features/get', function (Request $request, Response $response) {
+    if(!Request::ValidateRequestFields($request, [ 'slug' ])) {
+        $response->AppendData('One or more arguments are missing', 'message');
+        $response->SetCode(500);
+        return;
+    }
+
+    $controller = new FeatureController();
+
+    $feature = $controller->GetFeatureBySlug($request->data['slug']);
+    
+    if($feature) {
+        $response->AppendData($feature, 'feature');
+        $response->SetCode(200);
+    } else {
+        $response->AppendData('No feature was found', 'message');
+        $response->SetCode(500);
+    }
+});
+
 $router->post('/features/new', function (Request $request, Response $response) {
     if(!Request::ValidateRequestFields($request, [ 'name' ])) {
         $response->AppendData('One or more arguments are missing', 'message');
