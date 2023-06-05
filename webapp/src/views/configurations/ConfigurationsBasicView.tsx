@@ -9,6 +9,10 @@ export interface ConfigurationsPropsType {
 export default function ConfigurationsBasicView(props: ConfigurationsPropsType) {
     const menu = [
         {
+            label: "Configurations",
+            path: '/configurations'
+        },
+        {
             label: "Preferences",
             path: '/configurations/preferences'
         }, {
