@@ -3,4 +3,5 @@ export interface PreferenceType {
     name: string;
     value: string;
     slug?: string
+    isFromSystem?: boolean;
 }

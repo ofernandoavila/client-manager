@@ -22,6 +22,9 @@ class Preference {
     #[Column]
     public string $slug;
 
+    #[Column]
+    public bool $isFromSystem;
+
     #[PrePersist]
     public function setPreferenceslug() {
         $slug = str_replace(" ", "-", strtolower($this->name));

@@ -40,6 +40,14 @@ export default function PreferencesView() {
     return (
         <PreferencesBasicView>
             { alertMessage ? <Alert alert={alertMessage} status={alertStatus} /> : '' }
+            <ul className="nav nav-tabs py-4">
+                <li className="nav-item">
+                    <a className="nav-link active" href="#">Custom</a>
+                </li>
+                <li className="nav-item">
+                    <a className="nav-link" href="#">System</a>
+                </li>
+            </ul>
             <PreferencesGrid preferences={preferences} onFetch={fetchData} onAlert={setAlertMessage} onAlertStatus={setAlertStatus} />
         </PreferencesBasicView>
     );

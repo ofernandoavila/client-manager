@@ -51,7 +51,7 @@ export default function PreferencesGrid(props: PreferencesGridPropsType) {
                                 <td>
                                     <div className="btn-group">
                                         <Link to={'/configurations/preferences/edit/' + item.slug } ><button type="button" className="btn btn-sm btn-outline-secundary">Edit</button></Link>
-                                        <button type="button" onClick={() => DeleteItem(item.slug!)} className="btn btn-sm btn-outline-secundary">Delete</button>
+                                        { !item.isFromSystem ? <button type="button" onClick={() => DeleteItem(item.slug!)} className="btn btn-sm btn-outline-secundary">Delete</button> : '' }
                                     </div>
                                 </td>
                             </tr>
