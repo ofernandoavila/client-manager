@@ -7,7 +7,7 @@ export default function MenuHeader() {
     const [title, setTitle] = useState('Client Manager');
 
     const fetchData = async () => {
-        await PreferencesHelper.GetPreference('nome-empresa')
+        await PreferencesHelper.GetPreference('corporation-name')
             .then(data => {
                 if(typeof data.value == 'string') {
                     setTitle(data.value);
