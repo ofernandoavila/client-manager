@@ -11,7 +11,7 @@ $router->get('/clients', function (Request $request, Response $response) {
     $clients = $controller->GetAllClients();
 
     if($clients != null) {
-        $response->AppendData($clients);
+        $response->AppendData($clients, 'clients');
         $response->SetCode(200);
     } else {
         $response->SetCode(404);
