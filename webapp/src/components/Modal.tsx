@@ -8,6 +8,9 @@ export interface ModalPropsType {
     onConfirmLabel?: string;
     onCancelLabel?: string;
     onConfirm?: any;
+    onEdit?: any;
+    onEditLabel?: string;
+    editing?: boolean;
     onCancel?: any;
     content?: boolean;
     children?: any;
@@ -40,8 +43,10 @@ export default function Modal (props: ModalPropsType) {
                 <BootstrapModal.Body>{ props.children }</BootstrapModal.Body>
                 <BootstrapModal.Footer>
                     <Button variant="secondary" onClick={HandleCloseModal}>{ props.onCancelLabel ?? 'Close' }</Button>
-                    { props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : ''}
-                </BootstrapModal.Footer>
+                    { props.editing ? 
+                    ( <Button variant="secondary" onClick={props.onEdit}>{ props.onEditLabel ?? 'Ok' }</Button> ) : 
+                    ( props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
+                }</BootstrapModal.Footer>
             </BootstrapModal>
         );
     }
@@ -54,7 +59,10 @@ export default function Modal (props: ModalPropsType) {
             <BootstrapModal.Body>{ props.text }</BootstrapModal.Body>
             <BootstrapModal.Footer>
                 <Button variant="secondary" onClick={HandleCloseModal}>{ props.onCancelLabel ?? 'Close' }</Button>
-                { props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : ''}
+                { props.editing ? 
+                    ( <Button variant="secondary" onClick={props.onEdit}>{ props.onEditLabel ?? 'Ok' }</Button> ) : 
+                    ( props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
+                }
             </BootstrapModal.Footer>
         </BootstrapModal>
     );
