@@ -1,3 +1,42 @@
+export interface APIType<T, TResponse> {
+    get: (identifierValue: string) => Promise<TResponse>;
+    getAll: () => Promise<TResponse>;
+    create: (object: T) => Promise<APIResponseType<TResponse>>;
+    edit: (object: T) => Promise<APIResponseType<TResponse>>;
+    delete: (identifierValue: string) => Promise<APIResponseType<TResponse>>;
+}
+
+export interface APIResponseType<T> {
+    objects?: T[];
+    object?: T;
+    message?: string;
+    status?: string;
+    error?: Exception;
+    method?: "POST" | "GET" | undefined;
+    url?: string;
+}
+
+export interface APIBasicConfig {
+    baseURL: string;
+}
+
+export interface APIContext {
+    context: string;
+}
+
+export interface APIIdentifier {
+    identifier: string;
+}
+
+export interface APICoresMode {
+    corsMode?: RequestMode | undefined;
+}
+
+export interface Exception {
+    code: number;
+    message: string;
+}
+
 export interface Client {
     id?: number;
     name: string;
@@ -65,4 +104,17 @@ export interface PreferenceAPIResponse {
     preferences?: Preference[];
     preference?: Preference;
     status: string;
+}
+
+export interface Currency {
+    id?: number;
+    name: string;
+    slug?: string;
+    symbol?: string;
+    isFromSystem?: boolean;
+}
+
+export interface CurrencyAPIResponse extends APIResponseType<Currency> {
+    currencies?: Currency[];
+    currency?: Currency;
 }

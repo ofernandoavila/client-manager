@@ -1,35 +1,8 @@
-import { Client, ClientAPIResponse, Order, OrderAPIResponse, Preference, PreferenceAPIResponse, User, UserAPIResponse } from "../types/ContextTypes";
+import { APIBasicConfig, APIContext, APICoresMode, APIIdentifier, APIResponseType, APIType, Client, ClientAPIResponse, Currency, CurrencyAPIResponse, Exception, Order, OrderAPIResponse, Preference, PreferenceAPIResponse, User, UserAPIResponse } from "../types/ContextTypes";
 
-export interface APIResponseType<T> {
-    objects?: T[];
-    object?: T;
-    message?: string;
-    status?: string;    
-}
 
-export interface APIBasicConfig {
-    baseURL: string;
-}
 
-export interface APIContext {
-    context: string;
-}
 
-export interface APIIdentifier {
-    identifier: string;
-}
-
-export interface APICoresMode {
-    corsMode?: RequestMode | undefined;
-}
-
-export interface APIType<T, TResponse> {
-    get: (identifierValue: string) => Promise<TResponse>;
-    getAll: () => Promise<TResponse>;
-    create: (object: T) => Promise<APIResponseType<TResponse>>;
-    edit: (object: T) => Promise<APIResponseType<TResponse>>;
-    delete: (identifierValue: string) => Promise<APIResponseType<TResponse>>;
-}
 
 export class Api<T, TResponse> implements APIType<T, TResponse>, APIBasicConfig, APIContext, APIIdentifier, APICoresMode {
 
@@ -81,8 +54,9 @@ export class Api<T, TResponse> implements APIType<T, TResponse>, APIBasicConfig,
 
     async edit(object: T): Promise<APIResponseType<TResponse>> {
         return await fetch(this.baseURL + "/" + this.context + "/edit", {
-            method: 'get',
-            mode: this.corsMode
+            method: 'post',
+            mode: this.corsMode,
+            body: JSON.stringify(object)
         })
         .then(res => res.json())
         .then(data => {
@@ -91,7 +65,7 @@ export class Api<T, TResponse> implements APIType<T, TResponse>, APIBasicConfig,
     }
     
     async delete(identifierValue: string): Promise<APIResponseType<TResponse>> {
-        return await fetch(this.baseURL + "/" + this.context + "?" + this.identifier + "=" + identifierValue, {
+        return await fetch(this.baseURL + "/" + this.context + "/delete?" + this.identifier + "=" + identifierValue, {
             method: 'get',
             mode: this.corsMode
         })
@@ -123,6 +97,12 @@ export class UserAPI extends Api<User, UserAPIResponse> {
 export class PreferenceAPI extends Api<Preference, PreferenceAPIResponse> {
     constructor() {
         super('preferences', 'slug', 'cors');
+    }
+}
+
+export class CurrencyAPI extends Api<Currency, CurrencyAPIResponse> {
+    constructor() {
+        super('currencies', 'slug', 'cors');
     }
 }
 

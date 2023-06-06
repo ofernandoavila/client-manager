@@ -1,5 +1,5 @@
 export const FormHelper = {
-    ValidateForm: () => {
+    ValidateForm: ():boolean => {
         let requireds = document.querySelectorAll("input[required]");
         let isValid: boolean = true;
 
