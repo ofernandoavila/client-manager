@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Modal from "../../../components/Modal";
 import { Link } from "react-router-dom";
-import { SystemAPI } from "../../../helpers/Api";
+import { CurrencyAPI, SystemAPI } from "../../../helpers/Api";
+import CurrencyGrid from "../components/CurrencyGrid";
 
 export interface ConfigurationTabPropsType {
     onAlertMessage?: any;
@@ -51,30 +52,11 @@ export function ConfigurationGeneralTabView(props: ConfigurationTabPropsType) {
 }
 
 export function ConfigurationCurrencyTabView(props: ConfigurationTabPropsType) {
-    const [openCurrency, setOpenCurrency ] = useState(false);
+    
 
     return (
         <div className="row pt-4">
-            <div className="d-flex justify-content-between mb-4">
-                <h3>Currencies</h3>
-                <button className="btn btn-primary" onClick={event => setOpenCurrency(!openCurrency)}>Create new currency</button>
-                <Modal size="lg" isOpen={openCurrency} onCancel={setOpenCurrency} text="Type your new currency" type="Create new currency" content>
-                    <div className="row">
-                        <div className="col-md-8">
-                            <div className="form-group">
-                                <label>Name</label>
-                                <input type="text" className="form-control" />
-                            </div>
-                        </div>
-                        <div className="col-md-4">
-                            <div className="form-group">
-                                <label>Symbol</label>
-                                <input type="text" className="form-control" />
-                            </div>
-                        </div>
-                    </div>
-                </Modal>
-            </div>
+            <CurrencyGrid onAlert={props.onAlertMessage} onAlertStatus={props.onAlertStatus} />
         </div>
     );
 }
