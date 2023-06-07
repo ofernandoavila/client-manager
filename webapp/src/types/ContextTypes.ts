@@ -118,3 +118,15 @@ export interface CurrencyAPIResponse extends APIResponseType<Currency> {
     currencies?: Currency[];
     currency?: Currency;
 }
+
+export interface Feature {
+    id?: number;
+    name: string;
+    slug?: string;
+    data?: any;
+}
+
+export interface FeatureAPIResponse extends APIResponseType<Feature> {
+    features?: Feature[];
+    feature?: Feature;
+}

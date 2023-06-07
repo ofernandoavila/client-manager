@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { FeatureType } from "./types/FeatureType";
 import FeatureBasicView from "./components/FeatureBasicView";
-import { FeatureAPI } from "./api/FeatureAPI";
 import { useParams } from "react-router-dom";
 import FeatureEditTabsView from "./FeatureEditTabsView";
+import { Feature } from "../../../types/ContextTypes";
 
 export default function FeaturesEditView() {
     const { featureSlug } = useParams();
 
-    const [feature, setFeature] = useState<FeatureType | null>(null);
+    const [feature, setFeature] = useState<Feature | null>(null);
 
     const fetchData = async () => {
-        await FeatureAPI.getBy(featureSlug!)
-            .then(data => setFeature(data.feature!))
     }
 
     useEffect(() => {

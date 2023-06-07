@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-import { FeatureType } from "../types/FeatureType";
-import { FeatureAPI } from "../api/FeatureAPI";
+import { Feature } from "../../../../types/ContextTypes";
 
 interface FeaturesGridPropsType {
-    features: Array<FeatureType> | null;
+    features: Feature[] | null;
     onAlert?: any;
     onAlertStatus?: any;
     onFetch?: any;
@@ -13,18 +12,17 @@ export default function FeaturesGrid(props: FeaturesGridPropsType) {
 
     async function DeleteItem(slug: string) {
         return;
-        return await FeatureAPI.delete(slug)
-            .then(data => {
-                if (props.onAlertStatus) {
-                    props.onAlertStatus('danger');
-                }
-                if (props.onAlert) {
-                    props.onAlert(data.message);
-                }
-                if (props.onFetch) {
-                    props.onFetch();
-                }
-            });
+            // .then(data => {
+            //     if (props.onAlertStatus) {
+            //         props.onAlertStatus('danger');
+            //     }
+            //     if (props.onAlert) {
+            //         props.onAlert(data.message);
+            //     }
+            //     if (props.onFetch) {
+            //         props.onFetch();
+            //     }
+            // });
     }
 
     if(!props.features) return (<></>);
