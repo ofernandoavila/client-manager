@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import { Feature } from "../../../../types/ContextTypes";
+import { useEffect, useState } from "react";
+import { useFeature } from "../../../../hooks/useFeature";
 
 interface FeaturesGridPropsType {
-    features: Feature[] | null;
+    features?: Feature[] | null;
     onAlert?: any;
     onAlertStatus?: any;
     onFetch?: any;
@@ -25,11 +27,17 @@ export default function FeaturesGrid(props: FeaturesGridPropsType) {
             // });
     }
 
-    if(!props.features) return (<></>);
+    const { features } = useFeature();
+
+    useEffect(() => {
+        console.log(features);
+    });
+
+    if(!features) return (<></>);
 
     return (
         <>
-            {  props.features.length > 0 ? (
+            {  features.length > 0 ? (
                 <table className="table">
                     <thead>
                         <tr>
@@ -40,7 +48,7 @@ export default function FeaturesGrid(props: FeaturesGridPropsType) {
                         </tr>
                     </thead>
                     <tbody>
-                        {props.features.map( item => (
+                        {features.map( item => (
                             <tr>
                                 <th scope="row">{item.id}</th>
                                 <td>{ item.name }</td>

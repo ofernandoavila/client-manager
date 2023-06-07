@@ -1,4 +1,4 @@
-import { APIBasicConfig, APIContext, APICoresMode, APIIdentifier, APIResponseType, APIType, Client, ClientAPIResponse, Currency, CurrencyAPIResponse, Exception, Order, OrderAPIResponse, Preference, PreferenceAPIResponse, User, UserAPIResponse } from "../types/ContextTypes";
+import { APIBasicConfig, APIContext, APICoresMode, APIIdentifier, APIResponseType, APIType, Client, ClientAPIResponse, Currency, CurrencyAPIResponse, Exception, Feature, FeatureAPIResponse, Order, OrderAPIResponse, Preference, PreferenceAPIResponse, User, UserAPIResponse } from "../types/ContextTypes";
 
 
 
@@ -120,5 +120,11 @@ export class SystemAPI extends Api<object, object> {
         .then((data: APIResponseType<object>) => {
             return data;
         });
+    }
+}
+
+export class FeatureAPI extends Api<Feature, FeatureAPIResponse> {
+    constructor() {
+        super('features', 'slug', 'cors');
     }
 }
