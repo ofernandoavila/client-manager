@@ -22,15 +22,18 @@ class System {
             [
                 'name' => 'Currency', 
                 'value' => 'USD$',
+                'slug' => 'currency',
                 'isFromSystem' => true
             ],
             [
                 'name' => 'Corporation Name', 
                 'value' => 'Client Manager',
+                'slug' => 'corporation-name',
                 'isFromSystem' => true
             ],
             [
-                'name' => 'Decimal Separator',  
+                'name' => 'Decimal Separator',
+                'slug' => 'decimal-separator',  
                 'value' => '.',
                 'isFromSystem' => true
             ]
