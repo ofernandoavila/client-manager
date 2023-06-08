@@ -30,8 +30,10 @@ class Preference {
 
     #[PrePersist]
     public function setPreferenceslug() {
-        $slug = str_replace(" ", "-", strtolower($this->name));
-        $this->slug = $slug;
+        if($this->slug == null) {
+            $slug = str_replace(" ", "-", strtolower($this->name));
+            $this->slug = $slug;
+        }
     }
 
     #[PrePersist]
