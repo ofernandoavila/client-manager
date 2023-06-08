@@ -1,6 +1,7 @@
 <?php
 
 namespace Avilamidia\ClientManager\Controller;
+use Avilamidia\ClientManager\Exception\MissingSystemPreferenceException;
 use Avilamidia\ClientManager\Model\Preference;
 
 class SystemController {
@@ -17,11 +18,23 @@ class SystemController {
             $preference = new Preference();
             $preference->name = $systemPreference['name'];
             $preference->value = $systemPreference['value'];
+            $preference->slug = $systemPreference['slug'];
             $preference->isFromSystem = $systemPreference['isFromSystem'];
 
             PreferenceController::SavePreference($preference);
         }
 
         return true;
+    }
+
+    public static function CheckSystemIntegrity() {
+        global $system;
+
+        $preferenceController = new PreferenceController();
+        foreach($system->getPreferencesFromSystem() as $systemPreference) {
+            $preference = $preferenceController->GetPreferenceBySlug($systemPreference['slug']);
+
+            if($preference == null) throw new MissingSystemPreferenceException($systemPreference);
+        }
     }
 }
