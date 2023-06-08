@@ -1,6 +1,7 @@
 <?php
 
 namespace Avilamidia\ClientManager\Core;
+use Avilamidia\ClientManager\Controller\SystemController;
 use Avilamidia\ClientManager\Helper\EntityManagerCreator;
 
 class Core {
@@ -19,6 +20,8 @@ class Core {
     }
     public function Init() {
         global $router;
+
+        SystemController::CheckSystemIntegrity();
 
         foreach($router->GetRoutes() as $route) {
             if($this->request->method == $route['method']) {
