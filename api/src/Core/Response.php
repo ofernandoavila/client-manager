@@ -68,10 +68,11 @@ final class Response {
     public static function ThrowError(Request $request, Response $response) {
         if($request->isJson) {
             $response->SetResponseType('application/json');
-            $response->AppendData("Current route was not found", 'message');
+            
+            $response->AppendData($request->data['error']['code'], 'code');
+            $response->AppendData($request->data['error']['message'], 'message');
             $response->AppendData($request->url, 'url');
             $response->AppendData($request->method, 'method');
-            $response->AppendData($request->data);
 
             echo json_encode($response->SendResponse());
             return;
