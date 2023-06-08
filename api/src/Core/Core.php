@@ -72,18 +72,20 @@ class Core {
     }
 
     public static function StartUpProject($applicationMode = 'dev') {
-        global $router, $core, $configs, $applicationMode, $em, $system;
+        global $router, $core, $configs, $applicationMode, $em, $system, $labels;
         date_default_timezone_set('America/Sao_Paulo');
 
+        
         $dotenv = \Dotenv\Dotenv::createImmutable(__DIR__ . '/../config');
         $dotenv->load();
-
+        
         $em = EntityManagerCreator::createEntityManager();
-
+        
         session_start();
         session_regenerate_id();
-
+        
         $configs = Config::GetConfigs();
+        Resources::LoadTextResource();
 
         $system = new System();
 
