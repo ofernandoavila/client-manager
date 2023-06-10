@@ -12,7 +12,7 @@ export default function UsersView() {
     const fetchData = async () => {
         await UserAPI.prototype.getAll()
             .then( data => {
-                setUsers(data.users!);
+                setUsers(data);
             });
     }
 

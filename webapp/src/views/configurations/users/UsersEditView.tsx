@@ -13,7 +13,7 @@ export default function UsersEditView() {
     const fetchData = async () => {
         await UserAPI.prototype.get(userHash!)
             .then( data => {
-                setUser(data.user);
+                setUser(data);
             });
     }
 

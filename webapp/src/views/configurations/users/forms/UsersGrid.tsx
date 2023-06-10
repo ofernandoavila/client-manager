@@ -18,7 +18,7 @@ export default function UsersGrid(props: UsersGridPropsType) {
         const api = new UserAPI();
         return await api.getAll()
             .then( data => {
-                setUsers(data.users);
+                setUsers(data);
             })
     };
 
