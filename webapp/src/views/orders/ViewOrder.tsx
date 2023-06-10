@@ -16,7 +16,7 @@ export default function ViewOrder() {
     const fetchData = async () => {
         await Api.get(orderId!)
             .then( data => {
-                setOrder(data.order!);
+                setOrder(data);
             });
     }
 

@@ -38,7 +38,7 @@ export default function OrdersGrid(props: OrderGridPropsType) {
 
         await Api.getAll()
             .then(data => {
-                setOrders(data.orders);
+                setOrders(data);
             });
     }
 
