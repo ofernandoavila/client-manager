@@ -16,7 +16,7 @@ export default function ClientSelect(props: ClientSelectPropsType) {
     const fetchData = async () => {
         const api = new ClientAPI();
         await api.getAll()
-            .then(data => setClients(data.clients));
+            .then(data => setClients(data));
     }
 
     const selectClient = (event: any) => {

@@ -19,7 +19,7 @@ export default function ClientGrid(props: ClientsGridPropsType) {
         let api = new ClientAPI();
         await api.getAll()
             .then(data => {
-                setClients(data.clients);
+                setClients(data);
             });
     }
 
