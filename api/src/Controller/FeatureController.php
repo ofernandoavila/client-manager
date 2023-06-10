@@ -69,8 +69,6 @@ class FeatureController extends Controller {
     public function GetFullFeatureBySlug(string $slug) {
         $feature = $this->GetFeatureBySlug($slug);
 
-        $feature->data = $this->GetFeatureItemsFromFeature($feature);
-
         return $feature;
     }
 }

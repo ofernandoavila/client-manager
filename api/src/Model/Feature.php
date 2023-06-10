@@ -28,7 +28,7 @@ class Feature {
 
     #[OneToMany( targetEntity: FeatureAttribute::class, mappedBy: "parent")]
     private $attributes;
-    public $data;
+    private $data;
     #[Column]
     public bool $displayOnTopMenu;
     #[Column]
@@ -44,5 +44,9 @@ class Feature {
 
     public function getAttributes() {
         return $this->attributes;
+    }
+
+    public function getData() {
+        return $this->data;
     }
 }
