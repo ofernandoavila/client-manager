@@ -16,7 +16,7 @@ export default function ConfigurationsMenu(props: ConfigurationsMenuPropsType) {
             {
                 props.menu.map((item, index) => {
                     return (
-                        <Link to={item.path} className={item.label === props.current ? "nav-link active" : "nav-link"}>
+                        <Link to={item.path} key={index} className={item.label === props.current ? "nav-link active" : "nav-link"}>
                             {item.label}
                         </Link>
                     )

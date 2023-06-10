@@ -10,20 +10,6 @@ interface PreferencesBasicViewPropsType {
 
 export default function PreferencesBasicView(props: PreferencesBasicViewPropsType) {
 
-    const [preferences, setPreferences] = useState<Preference[] | null>(null);
-
-    const fetchData = async () => {
-        await PreferenceAPI.prototype.getAll()
-            .then( data => {
-                console.log(data);
-                setPreferences(data);
-            });
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     return (
         <ConfigurationsBasicView currentMenu="Preferences">
             <div className="d-flex justify-content-between mb-4">

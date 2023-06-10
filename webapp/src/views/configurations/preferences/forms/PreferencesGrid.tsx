@@ -57,8 +57,8 @@ export default function PreferencesGrid(props: PreferencesGridPropsType) {
                         </tr>
                     </thead>
                     <tbody>
-                        { preferences.map( item => (
-                            <tr>
+                        { preferences.map( (item, index) => (
+                            <tr key={index}>
                                 <th scope="row">{item.id}</th>
                                 <td>{ item.name }</td>
                                 <td>{ item.value }</td>

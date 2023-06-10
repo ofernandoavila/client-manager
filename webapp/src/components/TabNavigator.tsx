@@ -26,8 +26,8 @@ export default function TabNavigator(props: TabNavigatorPropsType) {
             onSelect={HandleTabNavigation}
             className="mb-3"
         >
-            { props.tabs.map( tab => (
-                <Tab eventKey={tab.key} title={tab.title}>
+            { props.tabs.map( (tab, index) => (
+                <Tab eventKey={tab.key} key={index} title={tab.title}>
                     { tab.content }
                 </Tab>
             ) ) }

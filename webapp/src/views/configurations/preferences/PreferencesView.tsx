@@ -5,19 +5,14 @@ import PreferencesBasicView from "./PreferencesBasicView";
 import Alert from "../../../components/Alert";
 import { PreferenceAPI } from "../../../helpers/Api";
 import { Preference } from "../../../types/ContextTypes";
+import { usePreference } from "../../../hooks/usePreference";
 
 export default function PreferencesView() {
 
-    const [preferences, setPreferences] = useState<Preference[] | null>(null);
+    const { preferences } = usePreference();
 
     const { state } = useLocation();
 
-    const fetchData = async () => {
-        await PreferenceAPI.prototype.getAll()
-            .then( data => {
-                setPreferences(data);
-            });
-    }
 
     const [alertMessage, setAlertMessage] = useState('');
     const [alertStatus, setAlertStatus] = useState('');
@@ -32,7 +27,6 @@ export default function PreferencesView() {
                 setAlertStatus(state.alertType);
             }
         }
-        fetchData();
     }, []);
 
     return (
@@ -46,7 +40,7 @@ export default function PreferencesView() {
                     <a className="nav-link" href="#">System</a>
                 </li>
             </ul>
-            <PreferencesGrid preferences={preferences} onFetch={fetchData} onAlert={setAlertMessage} onAlertStatus={setAlertStatus} />
+            <PreferencesGrid preferences={preferences} onAlert={setAlertMessage} onAlertStatus={setAlertStatus} />
         </PreferencesBasicView>
     );
 }
