@@ -1,17 +1,20 @@
-export interface APIType<T, TResponse> {
-    get: (identifierValue: string) => Promise<TResponse>;
-    getAll: () => Promise<TResponse>;
-    create: (object: T) => Promise<APIResponseType<TResponse>>;
-    edit: (object: T) => Promise<APIResponseType<TResponse>>;
-    delete: (identifierValue: string) => Promise<APIResponseType<TResponse>>;
+export interface APIType<T> {
+    get: (identifierValue: string) => Promise<T>;
+    getAll: () => Promise<Array<T> | APIGetAllResponse<T>>;
+    create: (object: T) => Promise<APIResponseType>;
+    edit: (object: T) => Promise<APIResponseType>;
+    delete: (identifierValue: string) => Promise<APIResponseType>;
 }
 
-export interface APIResponseType<T> {
-    objects?: T[];
-    object?: T;
+export interface APIError {
+    code: number;
+    message: string;
+}
+
+export interface APIResponseType {
     message?: string;
     status?: string;
-    error?: Exception;
+    error?: APIError;
     method?: "POST" | "GET" | undefined;
     url?: string;
 }
@@ -49,9 +52,14 @@ export interface Client {
     orders?: Array<Order>;
 }
 
-export interface ClientAPIResponse {
-    clients?: Client[];
-    status: string;
+export interface APIGetAllResponse<T> {
+    objects?: Array<T>;
+    error?: APIError;
+}
+
+export interface APIGetResponse<T> {
+    object?: T;
+    error?: APIError;
 }
 
 export interface Order {
@@ -71,12 +79,6 @@ export interface Order {
     orderHash?: string | null;
 }
 
-export interface OrderAPIResponse {
-    orders?: Order[];
-    order?: Order;
-    status: string;
-}
-
 export interface User {
     id?: number;
     username: string;
@@ -84,12 +86,6 @@ export interface User {
     email: string;
     userHash?: string;
     password?: string;
-}
-
-export interface UserAPIResponse {
-    users?: User[];
-    user?: User;
-    status: string;
 }
 
 export interface Preference {
@@ -100,12 +96,6 @@ export interface Preference {
     isFromSystem?: boolean;
 }
 
-export interface PreferenceAPIResponse {
-    preferences?: Preference[];
-    preference?: Preference;
-    status: string;
-}
-
 export interface Currency {
     id?: number;
     name: string;
@@ -114,19 +104,9 @@ export interface Currency {
     isFromSystem?: boolean;
 }
 
-export interface CurrencyAPIResponse extends APIResponseType<Currency> {
-    currencies?: Currency[];
-    currency?: Currency;
-}
-
 export interface Feature {
     id?: number;
     name: string;
     slug?: string;
     data?: any;
-}
-
-export interface FeatureAPIResponse extends APIResponseType<Feature> {
-    features?: Feature[];
-    feature?: Feature;
 }
