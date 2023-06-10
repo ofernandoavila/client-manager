@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "../../../components/Modal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { CurrencyAPI, SystemAPI } from "../../../helpers/Api";
 import CurrencyGrid from "../components/CurrencyGrid";
 
@@ -10,21 +10,9 @@ export interface ConfigurationTabPropsType {
 }
 
 export function ConfigurationGeneralTabView(props: ConfigurationTabPropsType) {
-
-    const [openModal, setOpenModal] = useState(false);
-
-    const Api = new SystemAPI();
-
-    const HandleResetPreferences = async (event: any) => {
-        event.preventDefault();
-        await Api.ResetAllPreferences()
-            .then( data => {
-                setOpenModal(false);
-                props.onAlertMessage(data.message);
-                props.onAlertStatus('success');
-            });
-    }
-
+    
+    const navigate = useNavigate();
+    
     return ( 
         <div className="row">
             <h3>General</h3>
@@ -33,16 +21,9 @@ export function ConfigurationGeneralTabView(props: ConfigurationTabPropsType) {
                     <div className="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                         <div className="d-flex justify-content-between align-items-center w-100">
                             <strong className="text-gray-dark">Reset all system preferences to default</strong>
-                            <button className="btn btn-primary" onClick={event => setOpenModal(!openModal)}>
+                            <button className="btn btn-primary" onClick={event => navigate('/restore', { state: { message: "Do you really want to reset all system preferences?" } })}>
                                 Reset all preferences
                             </button>
-                            <Modal
-                                onConfirm={HandleResetPreferences}
-                                onConfirmLabel={"Reset all preferences"}
-                                isOpen={openModal}
-                                text="Do you really want to reset all preferences?"
-                                type="Warning"
-                            />  
                         </div>
                     </div>
                 </div>

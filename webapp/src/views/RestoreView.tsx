@@ -1,29 +1,31 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { SystemAPI } from "../helpers/Api";
-import { useFeature } from "../hooks/useFeature";
+import { useEffect } from "react";
 
 export default function RestoreView() {
 
-    const { reloadFeatures } = useFeature();
     const navigate = useNavigate();
+
+    const { state } = useLocation();
 
     const RestoreSystem = async (event: any) => {
         const systemApi = new SystemAPI();
 
         await systemApi.ResetAllPreferences()
-            .then( data => reloadFeatures)
             .then( data => navigate('/'));
     }
 
     return (
         <div className="container vh-100 d-flex align-items-center justify-content-center">
-            <div className="card">
+            <div className="card w-50">
                 <div className="card-header">
                     <h3 className="card-title">Restore</h3>
                 </div>
                     
                 <div className="card-body">
-                    <p>Your system is not up to date. Please update your software to continue</p>
+                    { state.message.split("\n").map( (message:string) => (
+                        <p>{ message }</p>
+                    )) }
                 </div>
 
                 <div className="card-footer">

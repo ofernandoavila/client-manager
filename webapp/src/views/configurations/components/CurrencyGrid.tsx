@@ -26,7 +26,7 @@ export default function CurrencyGrid(props: CurrencyGridPropsType) {
     const fetchData = async () => {
         return await Api.getAll()
             .then(data => {
-                setCurrencies(data.currencies!);
+                setCurrencies(data);
             });
     };
 

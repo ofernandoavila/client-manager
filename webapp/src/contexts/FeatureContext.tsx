@@ -61,7 +61,7 @@ export function FeatureContextProvider(props: FeatureContextProviderPropsType) {
     const fetchData = async () => {
         await Api.getAll()
                 .then(data => {
-                    setFeatures(data.features!);
+                    setFeatures(data);
                 })
     }
 
