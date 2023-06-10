@@ -15,7 +15,7 @@ class Order {
     public int $id;
 
     #[ManyToOne(targetEntity: Client::class, inversedBy: 'orders', fetch: 'EAGER')]
-    public Client $client;
+    private Client $client;
 
     #[Column]
     public float $amount;

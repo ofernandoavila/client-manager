@@ -3,8 +3,13 @@ import BasicView from "../BasicView";
 import { Link, useLocation } from 'react-router-dom';
 import Alert from "../../components/Alert";
 import OrdersGrid from "./components/OrdersGrid";
+import {  OrderAPI } from "../../helpers/Api";
+import {  Order } from "../../types/ContextTypes";
+import DataGrid from "../../components/DataGrid";
 
 export function OrdersView() {
+
+    const [orders, setOrders] = useState<Order[]>([]);
 
     const { state } = useLocation();
 
@@ -12,6 +17,15 @@ export function OrdersView() {
     const [alertStatus, setAlertStatus] = useState('');
 
     useEffect(() => {
+
+        const fetch = async () => {
+            let api = new OrderAPI();
+
+            await api.getAll()
+                    .then( data => {
+                        setOrders(data);
+                    });
+        }
 
         if(state != null) {
             if(state.alert != null) {
@@ -22,6 +36,8 @@ export function OrdersView() {
                 setAlertStatus(state.alertType);
             }
         }
+
+        fetch();
     }, []);
 
     return (
@@ -33,7 +49,7 @@ export function OrdersView() {
                     <button className="btn btn-primary" >Create new order</button>
                 </Link>
             </div>
-            <OrdersGrid onAlert={setAlertMessage} onAlertStatus={setAlertStatus} />
+            <DataGrid objects={orders}/>
         </BasicView>
     );
 }
