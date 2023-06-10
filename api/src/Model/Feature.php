@@ -28,8 +28,11 @@ class Feature {
 
     #[OneToMany( targetEntity: FeatureAttribute::class, mappedBy: "parent")]
     private $attributes;
-
     public $data;
+    #[Column]
+    public bool $displayOnTopMenu;
+    #[Column]
+    public bool $displayAsConfigurationTab;
 
     public function __construct() {
     }
