@@ -2,26 +2,23 @@ import {
     APIBasicConfig,
     APIContext,
     APICoresMode,
+    APIError,
+    APIGetAllResponse,
+    APIGetResponse,
     APIIdentifier,
     APIResponseType,
     APIType,
     Client,
-    ClientAPIResponse,
     Currency,
-    CurrencyAPIResponse,
     Feature,
-    FeatureAPIResponse,
     Order,
-    OrderAPIResponse,
     Preference,
-    PreferenceAPIResponse,
-    User,
-    UserAPIResponse,
+    User
 } from "../types/ContextTypes";
 
-export class Api<T, TResponse>
+export class Api<T>
     implements
-        APIType<T, TResponse>,
+        APIType<T>,
         APIBasicConfig,
         APIContext,
         APIIdentifier,
@@ -43,7 +40,7 @@ export class Api<T, TResponse>
         this.baseURL = "http://localhost:80/client-manager/api";
     }
 
-    async get(identifierValue: string): Promise<TResponse> {
+    async get(identifierValue: string): Promise<T> {
         return await fetch(
             this.baseURL +
                 "/" +
@@ -57,24 +54,32 @@ export class Api<T, TResponse>
                 mode: this.corsMode,
             }
         )
-            .then((res) => res.json())
-            .then((data) => {
-                return data;
-            });
+        .then( response => response.json())
+        .then( data => {
+            if(data.code !== null && data.code !== undefined) {
+                throw new Error(data.message);
+            }
+
+            return data;
+        });
     }
 
-    async getAll(): Promise<TResponse> {
+    async getAll(): Promise<Array<T>> {
         return await fetch(this.baseURL + "/" + this.context, {
             method: "get",
             mode: this.corsMode,
         })
-            .then((res) => res.json())
-            .then((data: TResponse) => {
-                return data;
-            });
+        .then( response => response.json())
+        .then( data => {
+            if(data.code !== null && data.code !== undefined) {
+                throw new Error(data.message);
+            }
+
+            return data;
+        });
     }
 
-    async create(object: T): Promise<APIResponseType<TResponse>> {
+    async create(object: T): Promise<APIResponseType> {
         return await fetch(this.baseURL + "/" + this.context + "/new", {
             method: "post",
             mode: this.corsMode,
@@ -86,7 +91,7 @@ export class Api<T, TResponse>
             });
     }
 
-    async edit(object: T): Promise<APIResponseType<TResponse>> {
+    async edit(object: T): Promise<APIResponseType> {
         return await fetch(this.baseURL + "/" + this.context + "/edit", {
             method: "post",
             mode: this.corsMode,
@@ -98,7 +103,7 @@ export class Api<T, TResponse>
             });
     }
 
-    async delete(identifierValue: string): Promise<APIResponseType<TResponse>> {
+    async delete(identifierValue: string): Promise<APIResponseType> {
         return await fetch(
             this.baseURL +
                 "/" +
@@ -119,42 +124,42 @@ export class Api<T, TResponse>
     }
 }
 
-export class ClientAPI extends Api<Client, ClientAPIResponse> {
+export class ClientAPI extends Api<Client> {
     constructor() {
         super("clients", "id", "cors");
     }
 }
 
-export class OrderAPI extends Api<Order, OrderAPIResponse> {
+export class OrderAPI extends Api<Order> {
     constructor() {
         super("orders", "order_id", "cors");
     }
 }
 
-export class UserAPI extends Api<User, UserAPIResponse> {
+export class UserAPI extends Api<User> {
     constructor() {
         super("users", "username", "cors");
     }
 }
 
-export class PreferenceAPI extends Api<Preference, PreferenceAPIResponse> {
+export class PreferenceAPI extends Api<Preference> {
     constructor() {
         super("preferences", "slug", "cors");
     }
 }
 
-export class CurrencyAPI extends Api<Currency, CurrencyAPIResponse> {
+export class CurrencyAPI extends Api<Currency> {
     constructor() {
         super("currencies", "slug", "cors");
     }
 }
 
-export class SystemAPI extends Api<object, object> {
+export class SystemAPI extends Api<object> {
     constructor() {
         super("system", "slug", "cors");
     }
 
-    async ResetAllPreferences(): Promise<APIResponseType<object>> {
+    async ResetAllPreferences(): Promise<APIResponseType> {
         return await fetch(
             this.baseURL + "/" + this.context + "/reset-preferences",
             {
@@ -163,13 +168,13 @@ export class SystemAPI extends Api<object, object> {
             }
         )
             .then((res) => res.json())
-            .then((data: APIResponseType<object>) => {
+            .then((data: APIResponseType) => {
                 return data;
             });
     }
 }
 
-export class FeatureAPI extends Api<Feature, FeatureAPIResponse> {
+export class FeatureAPI extends Api<Feature> {
     constructor() {
         super("features", "slug", "cors");
     }
