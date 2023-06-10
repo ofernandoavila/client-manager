@@ -13,7 +13,7 @@ $router->get('/orders', function (Request $request, Response $response) {
     $orders = $controller->GetAllOrders();
 
     if ($orders !== null) {
-        $response->AppendData($orders, 'orders');
+        $response->AppendData($orders);
         $response->SetCode(200);
     } else {
         $response->SetCode(404);

@@ -9,7 +9,7 @@ global $router;
 $router->get('/preferences', function(Request $request, Response $response) {
     $preferences = PreferenceController::GetAllPreferences();
 
-    $response->AppendData($preferences, 'preferences');
+    $response->AppendData($preferences);
     $response->SetCode(200);
 });
 
@@ -22,10 +22,10 @@ $router->get('/preferences/get', function(Request $request, Response $response) 
     $preference = PreferenceController::GetPreferenceBySlug($request->data['slug']);
 
     if($preference) {
-        $response->AppendData($preference, 'preference');
+        $response->AppendData($preference);
         $response->SetCode(200);
     } else {
-        $response->AppendData($preference, 'preference');
+        $response->AppendData($preference);
         $response->SetCode(500);
     }
 });
