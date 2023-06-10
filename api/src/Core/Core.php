@@ -21,7 +21,7 @@ class Core {
     public function Init() {
         global $router;
 
-        SystemController::CheckSystemIntegrity();
+        if($this->request->url != '/system/reset-preferences') SystemController::CheckSystemIntegrity();
 
         foreach($router->GetRoutes() as $route) {
             if($this->request->method == $route['method']) {
