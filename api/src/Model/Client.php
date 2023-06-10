@@ -36,5 +36,5 @@ class Client
     public string $zip;
 
     #[OneToMany(targetEntity: Order::class, mappedBy: 'client')]
-    public $orders;
+    private $orders;
 }
