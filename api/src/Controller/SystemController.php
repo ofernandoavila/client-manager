@@ -27,7 +27,7 @@ class SystemController {
         return true;
     }
 
-    public static function CheckSystemIntegrity() {
+    public static function CheckSystemIntegrity():bool {
         global $system;
 
         $preferenceController = new PreferenceController();
