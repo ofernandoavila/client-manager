@@ -36,5 +36,7 @@ class SystemController {
 
             if($preference == null) throw new MissingSystemPreferenceException($systemPreference);
         }
+
+        return true;
     }
 }
