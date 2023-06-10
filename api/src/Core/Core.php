@@ -105,7 +105,7 @@ class Core {
             $core->request->data['error']['code'] = $e->getCode();
             $core->request->data['error']['message'] = $e->getMessage();
 
-            $core->response->SetCode(500);
+            $core->response->SetCode(406);
 
             Response::ThrowError($core->request, $core->response);
         }
