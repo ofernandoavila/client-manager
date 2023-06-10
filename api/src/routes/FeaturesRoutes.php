@@ -15,7 +15,7 @@ $router->get('/features', function (Request $request, Response $response) {
     $features = $controller->GetAllFeatures();
     
     if($features) {
-        $response->AppendData($features, 'features');
+        $response->AppendData($features);
         $response->SetCode(200);
     } else {
         $response->AppendData('No features was found', 'message');
@@ -35,7 +35,7 @@ $router->get('/features/get', function (Request $request, Response $response) {
     $feature = $controller->GetFeatureBySlug($request->data['slug']);
     
     if($feature) {
-        $response->AppendData($feature, 'feature');
+        $response->AppendData($feature);
         $response->SetCode(200);
     } else {
         $response->AppendData('No feature was found', 'message');
@@ -136,7 +136,7 @@ $router->get('/features/attributes', function (Request $request, Response $respo
     $attributes = $controller->GetAllAttributesFromFeature($controller->GetFeatureBySlug($request->data['parentSlug']));
     
     if($attributes) {
-        $response->AppendData($attributes, 'attributes');
+        $response->AppendData($attributes);
         $response->SetCode(200);
     } else {
         $response->AppendData('An error ocurred while attempting create feature attribute', 'message');
