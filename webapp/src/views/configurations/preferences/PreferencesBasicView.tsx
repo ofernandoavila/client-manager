@@ -15,7 +15,8 @@ export default function PreferencesBasicView(props: PreferencesBasicViewPropsTyp
     const fetchData = async () => {
         await PreferenceAPI.prototype.getAll()
             .then( data => {
-                setPreferences(data.preferences!);
+                console.log(data);
+                setPreferences(data);
             });
     }
 

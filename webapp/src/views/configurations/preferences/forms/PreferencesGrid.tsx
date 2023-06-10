@@ -18,7 +18,7 @@ export default function PreferencesGrid(props: PreferencesGridPropsType) {
         const api = new PreferenceAPI();
         return await api.getAll()
                 .then(data => {
-                    setPreferences(data.preferences!);
+                    setPreferences(data);
                 });
     };
 

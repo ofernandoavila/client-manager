@@ -15,7 +15,7 @@ export default function PreferencesView() {
     const fetchData = async () => {
         await PreferenceAPI.prototype.getAll()
             .then( data => {
-                setPreferences(data.preferences!);
+                setPreferences(data);
             });
     }
 

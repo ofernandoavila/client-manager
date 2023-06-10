@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 type PreferenceContextType = {
     preference: Preference | null;
     preferences: Preference[];
-    reloadPreferences: () => void;
     createPreference: (preference: Preference) => Promise<void>;
     editPreference: (preference: Preference) => Promise<void>;
     deletePreference: (preference: Preference) => Promise<void>;
@@ -29,16 +28,9 @@ export function PreferenceContextProvider(props: PreferenceContextProviderPropsT
     const [preference, setPreference] = useState<Preference | null>(null);
     const [preferences, setPreferences] = useState<Preference[]>([]);
 
-    const [preferencesSytem, setPreferencesSytem] = useState<PreferencesSystemType>();
-
     const navigate = useNavigate();
 
     const Api = new PreferenceAPI();
-
-    function reloadPreferences():void {
-        fetchData();
-        verifyPreferences();
-    }
 
     async function createPreference(preference: Preference):Promise<void> {
         await Api.create(preference)
@@ -70,38 +62,25 @@ export function PreferenceContextProvider(props: PreferenceContextProviderPropsT
             });
     }
 
-    const fetchData = async () => {
-        await Api.getAll()
-                .then(data => {
-                    setPreferences(data.preferences!);
-                })
-    }
-
-    const systemPreferences = ['currency', 'decimal-separator', 'corporation-name'];
-
-    function verifyPreferences() {
-
-        systemPreferences.map( systemPreference => {
-            let current;            
-            preferences.map( preference => {
-                if( preference.slug == systemPreference) {
-                    current = preference;
-                }
-            });
-
-            if( current == null ) {
-                navigate('/restore');
-            }
-        });
-    }
+    
 
     useEffect(() => {
-        reloadPreferences();
+        const fetchData = async () => {
+            await Api.getAll()
+                .then( data => {
+                    setPreferences(data);
+                })
+                .catch( error => {
+                    navigate('/restore', { state: { message: error.message } });
+                })
+        }
+
+        fetchData();
     }, []);
 
 
     return (
-        <PreferenceContext.Provider value={{ preference, preferences, setPreference, reloadPreferences, createPreference, editPreference, deletePreference }}>
+        <PreferenceContext.Provider value={{ preference, preferences, setPreference, createPreference, editPreference, deletePreference }}>
             {props.children}
         </PreferenceContext.Provider>
     );

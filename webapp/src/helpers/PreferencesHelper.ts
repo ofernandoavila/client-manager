@@ -6,7 +6,7 @@ export const PreferencesHelper = {
     GetPreference: async (slug: string):Promise<Preference> => {
         return await PreferencesHelper.api.get(slug)
             .then(data => {
-                return data.preference!;
+                return data;
             });
-    }
+        }
 }

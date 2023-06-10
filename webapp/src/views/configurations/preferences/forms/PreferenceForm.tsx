@@ -12,6 +12,8 @@ export interface PreferenceFormPropsType {
 export default function PreferenceForm(props: PreferenceFormPropsType) {
     const navigate = useNavigate();
 
+    const API = new PreferenceAPI();
+
     async function createPreference() {
         if (!FormHelper.ValidateForm()) return false;
 
@@ -26,7 +28,7 @@ export default function PreferenceForm(props: PreferenceFormPropsType) {
     async function editPreference() {
         if (!FormHelper.ValidateForm()) return false;
 
-        await PreferenceAPI.prototype.edit({
+        await API.edit({
             slug: props.preference!.slug,
             name: props.preference!.name,
             value: value
