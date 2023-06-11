@@ -49,7 +49,26 @@ export function OrdersView() {
                     <button className="btn btn-primary" >Create new order</button>
                 </Link>
             </div>
-            <DataGrid objects={orders}/>
+            <DataGrid 
+                objects={orders} 
+                options={{ 
+                    ignoreProperties: [ "orderHash", "shippingCity", "shippingState", "shippingZipCode" ], 
+                    formatProperty: [ 
+                        { 
+                            property: 'amount', 
+                            type: "currency" 
+                        },
+                        { 
+                            property: 'shippingAddress', 
+                            type: "string", 
+                            stringFormat: {
+                                format: "{0}, {1} - {2} | {3}",
+                                valuesKeys: ["shippingAddress", "shippingCity", "shippingState", "shippingZipCode"]
+                            } 
+                        }
+                    ] 
+                }}
+            />
         </BasicView>
     );
 }

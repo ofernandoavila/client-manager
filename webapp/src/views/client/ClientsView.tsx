@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import BasicView from "../BasicView";
 import ClientGrid from "./components/ClientsGrid";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from "react-router-dom";
 import Alert from "../../components/Alert";
 import DataGrid from "../../components/DataGrid";
 import { ClientAPI } from "../../helpers/Api";
@@ -12,32 +12,52 @@ export function ClientsView() {
 
     const [clients, setClients] = useState<Client[]>([]);
 
-    const [alertMessage, setAlertMessage] = useState('');
-    const [alertStatus, setAlertStatus] = useState('');
+    const [alertMessage, setAlertMessage] = useState("");
+    const [alertStatus, setAlertStatus] = useState("");
 
     useEffect(() => {
-        const fetch = async() => {
+        const fetch = async () => {
             let api = new ClientAPI();
 
-            await api.getAll()
-                .then( data => {
-                    setClients(data);
-                });
-        }
+            await api.getAll().then((data) => {
+                setClients(data);
+            });
+        };
 
         fetch();
     }, []);
 
     return (
         <BasicView>
-            { alertMessage ? <Alert alert={alertMessage} status={alertStatus} /> : '' }
+            {alertMessage ? (
+                <Alert alert={alertMessage} status={alertStatus} />
+            ) : (
+                ""
+            )}
             <div className="d-flex justify-content-between mb-4">
                 <h1 className="">Clients</h1>
-                <Link to={'/clients/new'}>
-                    <button className="btn btn-primary" >Create new client</button>
+                <Link to={"/clients/new"}>
+                    <button className="btn btn-primary">
+                        Create new client
+                    </button>
                 </Link>
             </div>
-            <DataGrid objects={clients} />
+            <DataGrid 
+                objects={clients} 
+                options={{
+                    ignoreProperties: ["city", "state", "zip"],
+                    formatProperty: [
+                        { 
+                            property: 'address', 
+                            type: "string", 
+                            stringFormat: {
+                                format: "{0}, {1} - {2} | {3}",
+                                valuesKeys: ["address", "city", "state", "zip"]
+                            } 
+                        }
+                    ]
+                }}    
+            />
         </BasicView>
     );
 }
