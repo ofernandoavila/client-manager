@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Button, Modal as BootstrapModal } from "react-bootstrap";
 
 export interface ModalPropsType {
-    text: string;
+    text?: string;
     isOpen: boolean;
-    type: string;
+    title: string;
     onConfirmLabel?: string;
     onCancelLabel?: string;
     onConfirm?: any;
@@ -13,7 +13,7 @@ export interface ModalPropsType {
     editing?: boolean;
     onCancel?: any;
     content?: boolean;
-    children?: any;
+    children?: ReactNode;
     size?: "sm" | "lg" | "xl" | undefined;
 }
 
@@ -34,11 +34,11 @@ export default function Modal (props: ModalPropsType) {
         }
     },[props.isOpen]);
 
-    if(props.content) {
+    if(props.children !== undefined && props.children !== null) {
         return (
             <BootstrapModal size={props.size} show={isOpen} centered aria-labelledby="contained-modal-title-vcenter">
                 <BootstrapModal.Header>
-                    <BootstrapModal.Title>{ props.type }</BootstrapModal.Title>
+                    <BootstrapModal.Title>{ props.title }</BootstrapModal.Title>
                 </BootstrapModal.Header>
                 <BootstrapModal.Body>{ props.children }</BootstrapModal.Body>
                 <BootstrapModal.Footer>
@@ -54,7 +54,7 @@ export default function Modal (props: ModalPropsType) {
     return (
         <BootstrapModal show={isOpen} centered aria-labelledby="contained-modal-title-vcenter">
             <BootstrapModal.Header>
-            <BootstrapModal.Title>{ props.type }</BootstrapModal.Title>
+            <BootstrapModal.Title>{ props.title }</BootstrapModal.Title>
             </BootstrapModal.Header>
             <BootstrapModal.Body>{ props.text }</BootstrapModal.Body>
             <BootstrapModal.Footer>
