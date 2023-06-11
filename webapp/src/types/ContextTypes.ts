@@ -110,3 +110,7 @@ export interface Feature {
     slug?: string;
     data?: any;
 }
+
+export interface GenericObjectType {
+    [key: string]: any;
+}
