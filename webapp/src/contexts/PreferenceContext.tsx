@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useEffect, useState } from "react";
-import { Feature, Preference } from "../types/ContextTypes";
-import { FeatureAPI, PreferenceAPI } from "../helpers/Api";
+import { Preference } from "../types/ContextTypes";
+import { PreferenceAPI } from "../helpers/Api";
 import { useNavigate } from "react-router-dom";
 
 type PreferenceContextType = {
@@ -10,13 +10,8 @@ type PreferenceContextType = {
     editPreference: (preference: Preference) => Promise<void>;
     deletePreference: (preference: Preference) => Promise<void>;
     setPreference: any;
+    GetPreferenceValue: (slug: string) => string | null;
 }
-
-type PreferencesSystemType = {
-    currency: Preference;
-    decimalSeparator: Preference;
-    companyName: Preference;
-};
 
 export const PreferenceContext = createContext({} as PreferenceContextType);
 
@@ -62,7 +57,9 @@ export function PreferenceContextProvider(props: PreferenceContextProviderPropsT
             });
     }
 
-    
+    const GetPreferenceValue = (slug: string):string | null => {
+        return preferences.find( x => x.slug === slug)?.value ?? null;
+    }
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,11 +73,12 @@ export function PreferenceContextProvider(props: PreferenceContextProviderPropsT
         }
 
         fetchData();
+
     }, []);
 
 
     return (
-        <PreferenceContext.Provider value={{ preference, preferences, setPreference, createPreference, editPreference, deletePreference }}>
+        <PreferenceContext.Provider value={{ preference, preferences, GetPreferenceValue, setPreference, createPreference, editPreference, deletePreference }}>
             {props.children}
         </PreferenceContext.Provider>
     );
