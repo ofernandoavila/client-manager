@@ -13,7 +13,7 @@ $router->get('/' . $context, function(Request $request, Response $response) {
     $controller = new CurrencyController();
     $currencies = $controller->GetAll();
     if($currencies) {
-        $response->AppendData($currencies, 'currencies');
+        $response->AppendData($currencies);
         $response->SetCode(200);
         return;
     } else {
