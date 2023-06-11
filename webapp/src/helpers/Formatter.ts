@@ -1,22 +1,17 @@
 import { useEffect, useState } from "react";
 import { GenericObjectType, Preference } from "../types/ContextTypes";
 import { PreferencesHelper } from "./PreferencesHelper";
+import { usePreference } from "../hooks/usePreference";
 
 const useFormatter = () => {
     const [decimalSeparator, setDecimalSeparator] = useState("");
     const [currency, setCurrency] = useState("");
 
-    useEffect(() => {
-        const fetch = async () => {
-            let currency = await PreferencesHelper.GetPreference("currency");
-            setCurrency(currency.value);
+    const { GetPreferenceValue } = usePreference();
 
-            let decimalSeparator = await PreferencesHelper.GetPreference(
-                "decimal-separator"
-            );
-            setDecimalSeparator(decimalSeparator.value);
-        };
-        fetch();
+    useEffect(() => {
+        setCurrency(GetPreferenceValue("currency")!);
+        setDecimalSeparator(GetPreferenceValue("decimal-separator")!);
     }, []);
 
     const Currency = (value: number): string => {
