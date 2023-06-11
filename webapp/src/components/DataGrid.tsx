@@ -2,7 +2,6 @@ import { MouseEventHandler, useEffect, useState } from "react";
 import useFormatter from "../helpers/Formatter";
 import { GenericObjectType } from "../types/ContextTypes";
 import Modal from "./Modal";
-import { useOperations } from "./GroupOperations";
 
 interface DataGridProps<T> extends GenericObjectType {
     objects: T[];
@@ -39,7 +38,6 @@ export default function DataGrid<T extends GenericObjectType>(
     const [isNewOpen, setIsNewOpen] = useState<boolean>(false);
     const [isEditOpen, setIsEditOpen] = useState<boolean>(false);
     const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
-    const { NewItem } = useOperations<T>();
     const [ current, setCurrent ] = useState<T>();
 
     function Toggle(event: any) {
