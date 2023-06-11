@@ -7,7 +7,12 @@ export default function FeaturesView() {
 
     return (
         <FeatureBasicView>
-            <DataGrid objects={features}/>
+            <DataGrid 
+                objects={features} 
+                options={{
+                    ignoreProperties: ['displayOnTopMenu', 'displayAsConfigurationTab']
+                }}
+            />
         </FeatureBasicView>
     );
 }
