@@ -42,6 +42,13 @@ class Feature {
         $this->slug = SlugFormatter($this->name);
     }
 
+    #[PrePersist]
+    public function setConfigsOptions()
+    {
+        $this->displayOnTopMenu = false;
+        $this->displayAsConfigurationTab = false;
+    }
+
     public function getAttributes() {
         return $this->attributes;
     }
