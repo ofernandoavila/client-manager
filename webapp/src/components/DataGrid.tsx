@@ -1,7 +1,9 @@
 import { MouseEventHandler, useEffect, useState } from "react";
 import useFormatter from "../helpers/Formatter";
-import { GenericObjectType } from "../types/ContextTypes";
+import { GenericObjectType, Preference } from "../types/ContextTypes";
 import Modal from "./Modal";
+import { FeatureManagerTabs } from "../views/features/manager/FeatureManagerTabs";
+import OperationsForm from "./OperationsForm";
 
 interface DataGridProps<T> extends GenericObjectType {
     objects: T[];
@@ -48,16 +50,25 @@ export default function DataGrid<T extends GenericObjectType>(
     const onCreateItem = (event: any) => {
         setIsNewOpen(false);
         console.log('onCreate called');
+        CloseModal();
     }
 
     const onEditItem = (event: any) => {
         setIsEditOpen(false);
         console.log('onEdit called');
+        CloseModal();
     }
 
     const onView = (event: any) => {
         setIsViewOpen(false);
         console.log('onView called');
+        CloseModal();
+    }
+
+    const CloseModal = () => {
+        setIsNewOpen(false);
+        setIsEditOpen(false);
+        setIsViewOpen(false);
     }
 
     useEffect(() => {
@@ -211,17 +222,14 @@ export default function DataGrid<T extends GenericObjectType>(
                                         return <p>{key}: { item[key] }</p>;
                                     }) }
                                 </Modal>
-                                <Modal isOpen={isEditOpen} onCancel={onEditItem} onCancelLabel="Discart changes" title={ props.config.singularName }>
-                                    { Object.keys(item).map( key => {
-                                        return <p>{key}: { item[key] }</p>;
-                                    }) }
+                                <Modal size="lg" isOpen={isEditOpen} onCancel={onEditItem} onCancelLabel="Discart changes" title={ props.config.singularName }>
+                                    <OperationsForm object={item} />
                                 </Modal>
                             </th>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <Modal isOpen={isNewOpen} onConfirm={onCreateItem} title={"New " + props.config.singularName} />
             
         </>
     );

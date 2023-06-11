@@ -1,10 +1,13 @@
-import { Form } from "react-bootstrap";
+import { Form, Tab, Tabs } from "react-bootstrap";
 import Modal from "../../../components/Modal";
 import TabNavigator from "../../../components/TabNavigator";
+import { Feature } from "../../../types/ContextTypes";
+import { useState } from "react";
 
 export interface FeatureManagerTabsProps {
     onAlertMessage?: any;
     onAlertStatus?: any;
+    feature: Feature;
 }
 
 export function FeatureManagerGeneralTab(props: FeatureManagerTabsProps) {
@@ -13,11 +16,26 @@ export function FeatureManagerGeneralTab(props: FeatureManagerTabsProps) {
             <div className="d-flex justify-content-between mb-4">
                 <h3 className="">General</h3>
             </div>
+            <div className="row">
+                <div className="col-sm-6">
+                    <div className="row">
+                        <div className="col-sm-2">Name: </div>
+                        <div className="col-sm-10">{ props.feature.name }</div>
+                    </div>
+                </div>
+                <div className="col-sm-6">
+                    <div className="row">
+                        <div className="col-sm-2">Slug: </div>
+                        <div className="col-sm-10">{ props.feature.slug }</div>
+                    </div>
+                </div>
+            </div>
+            
         </>
     );
 }
 
-export function FeatureManagerDataTab(props: FeatureManagerTabsProps) {
+export function FeatureManagerDataTab() {
     return (
         <>
             <div className="d-flex justify-content-between mb-4">
@@ -27,7 +45,7 @@ export function FeatureManagerDataTab(props: FeatureManagerTabsProps) {
     );
 }
 
-export function FeatureManagerSettingsTab(props: FeatureManagerTabsProps) {
+export function FeatureManagerSettingsTab() {
     return (
         <>
             <div className="d-flex justify-content-between mb-4">
@@ -54,29 +72,29 @@ export function FeatureManagerSettingsTab(props: FeatureManagerTabsProps) {
     );
 }
 
-export const FeatureManagerTabList = [
-    { 
-        title: "General",
-        key: "general",
-        content: <FeatureManagerGeneralTab />
-    },
-    { 
-        title: "Data",
-        key: "data",
-        content: <FeatureManagerDataTab />
-    },
-    { 
-        title: "Settings",
-        key: "settings",
-        content: <FeatureManagerSettingsTab />
-    },
-]
+export function FeatureManagerTabs(props: FeatureManagerTabsProps) {
+    const [key, setKey] = useState('general');
 
-export function FeatureManagerTabs (props: FeatureManagerTabsProps) {
+    const HandleTabNavigation = (key: any ) => {
+        setKey(key);
+    }
+    
     return (
-        <TabNavigator
-            default="general"
-            tabs={FeatureManagerTabList}
-        />
+        <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={HandleTabNavigation}
+            className="mb-3"
+        >
+            <Tab eventKey={'general'} title="General">
+                <FeatureManagerGeneralTab feature={ props.feature } />
+            </Tab>
+            <Tab eventKey={'data'} title={"Data"}>
+                <FeatureManagerDataTab />
+            </Tab>
+            <Tab eventKey={'settings'} title={"Settings"}>
+                <FeatureManagerSettingsTab />
+            </Tab>
+        </Tabs>
     );
 }

@@ -44,8 +44,8 @@ export default function Modal (props: ModalPropsType) {
                 <BootstrapModal.Footer>
                     <Button variant="secondary" onClick={HandleCloseModal}>{ props.onCancelLabel ?? 'Close' }</Button>
                     { props.editing ? 
-                    ( <Button variant="secondary" onClick={props.onEdit}>{ props.onEditLabel ?? 'Ok' }</Button> ) : 
-                    ( props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
+                    ( <Button variant="primary" onClick={props.onEdit}>{ props.onEditLabel ?? 'Ok' }</Button> ) : 
+                    ( props.onConfirm ? ( <Button variant="primary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
                 }</BootstrapModal.Footer>
             </BootstrapModal>
         );
@@ -62,10 +62,9 @@ export default function Modal (props: ModalPropsType) {
                     ( <Button variant="secondary" onClick={props.onCancel}>{ props.onCancelLabel ?? 'Ok' }</Button> ) : 
                     ( props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
                 }
-                <Button variant="secondary" onClick={HandleCloseModal}>{ props.onCancelLabel ?? 'Close' }</Button>
                 { props.editing ? 
-                    ( <Button variant="secondary" onClick={props.onEdit}>{ props.onEditLabel ?? 'Ok' }</Button> ) : 
-                    ( props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
+                    ( <Button variant="primary" onClick={props.onEdit}>{ props.onEditLabel ?? 'Ok' }</Button> ) : 
+                    ( props.onConfirm ? ( <Button variant="primary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
                 }
             </BootstrapModal.Footer>
         </BootstrapModal>
