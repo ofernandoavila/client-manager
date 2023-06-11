@@ -58,6 +58,10 @@ export default function Modal (props: ModalPropsType) {
             </BootstrapModal.Header>
             <BootstrapModal.Body>{ props.text }</BootstrapModal.Body>
             <BootstrapModal.Footer>
+                { props.onCancel != null ? 
+                    ( <Button variant="secondary" onClick={props.onCancel}>{ props.onCancelLabel ?? 'Ok' }</Button> ) : 
+                    ( props.onConfirm ? ( <Button variant="secondary" onClick={props.onConfirm}>{ props.onConfirmLabel ?? 'Ok' }</Button> ) : '' )
+                }
                 <Button variant="secondary" onClick={HandleCloseModal}>{ props.onCancelLabel ?? 'Close' }</Button>
                 { props.editing ? 
                     ( <Button variant="secondary" onClick={props.onEdit}>{ props.onEditLabel ?? 'Ok' }</Button> ) : 
