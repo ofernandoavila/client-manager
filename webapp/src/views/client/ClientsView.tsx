@@ -34,15 +34,12 @@ export function ClientsView() {
             ) : (
                 ""
             )}
-            <div className="d-flex justify-content-between mb-4">
-                <h1 className="">Clients</h1>
-                <Link to={"/clients/new"}>
-                    <button className="btn btn-primary">
-                        Create new client
-                    </button>
-                </Link>
-            </div>
+            
             <DataGrid 
+                config={{
+                    singularName: "Client",
+                    pluralName: "Clients"
+                }}
                 objects={clients} 
                 options={{
                     ignoreProperties: ["city", "state", "zip"],

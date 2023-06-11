@@ -145,7 +145,7 @@ export default function CurrencyGrid(props: CurrencyGridPropsType) {
                         onEdit={HandleEditCurrency}
                         onCancel={setOpenCurrency}
                         text="Type your new currency"
-                        type="Create new currency"
+                        title="Create new currency"
                         editing={editMode}
                         content
                     >

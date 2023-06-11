@@ -43,14 +43,12 @@ export function OrdersView() {
     return (
         <BasicView>
             { alertMessage ? <Alert alert={alertMessage} status={alertStatus} /> : '' }
-            <div className="d-flex justify-content-between mb-4">
-                <h1 className="">Orders</h1>
-                <Link to={'/orders/new'}>
-                    <button className="btn btn-primary" >Create new order</button>
-                </Link>
-            </div>
-            <DataGrid 
-                objects={orders} 
+            <DataGrid
+                config={{
+                    singularName: "Order",
+                    pluralName: "Orders"
+                }}
+                objects={orders}
                 options={{ 
                     ignoreProperties: [ "orderHash", "shippingCity", "shippingState", "shippingZipCode" ], 
                     formatProperty: [ 

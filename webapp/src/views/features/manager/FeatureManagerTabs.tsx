@@ -45,7 +45,7 @@ export function FeatureManagerSettingsTab(props: FeatureManagerTabsProps) {
                             isOpen={false}
                             onConfirmLabel={"Reset all preferences"}
                             text="Do you really want to reset all preferences?"
-                            type="Warning"
+                            title="Warning"
                         />  
                     </div>
                 </div>

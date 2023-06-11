@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { Formatter } from "../../../helpers/Formatter";
 import { PreferencesHelper } from "../../../helpers/PreferencesHelper";
 import { Order } from "../../../types/ContextTypes";
+import useFormatter from "../../../helpers/Formatter";
 
 interface OrderCardPropsType {
     order: Order;
 }
 
 export default function OrderCard(props: OrderCardPropsType) {
+
+    const { Currency } = useFormatter();
 
     const [decimalSeparator, setDecimalSeparator] = useState('');
     const [currency, setCurrency] = useState('');
@@ -29,7 +31,7 @@ export default function OrderCard(props: OrderCardPropsType) {
             <div className="card-body">
                 <div className="row py-2">
                     <div className="col-md-2">Amount</div>
-                    <div className="col-md-6"><strong>{ Formatter.Currency(props.order.amount, currency, decimalSeparator) }</strong></div>
+                    <div className="col-md-6"><strong>{ Currency(props.order.amount) }</strong></div>
                 </div>
                 <div className="row py-2">
                     <div className="col-md-2">Shipping Method</div>

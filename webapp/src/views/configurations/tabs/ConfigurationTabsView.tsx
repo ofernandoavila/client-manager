@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../../../components/Modal";
 import { Link, useNavigate } from "react-router-dom";
 import { CurrencyAPI, SystemAPI } from "../../../helpers/Api";
 import CurrencyGrid from "../components/CurrencyGrid";
+import { Currency } from "../../../types/ContextTypes";
+import DataGrid from "../../../components/DataGrid";
 
 export interface ConfigurationTabPropsType {
     onAlertMessage?: any;
@@ -34,10 +36,22 @@ export function ConfigurationGeneralTabView(props: ConfigurationTabPropsType) {
 
 export function ConfigurationCurrencyTabView(props: ConfigurationTabPropsType) {
     
+    const [ currencies, setCurrencies ] = useState<Currency[]>([]);
+
+    useEffect(() => {
+        const fetch = async () => {
+            const api = new CurrencyAPI();
+
+            await api.getAll()
+                    .then( data => setCurrencies(data));
+        }
+
+        fetch();
+    }, []);
 
     return (
         <div className="row pt-4">
-            <CurrencyGrid onAlert={props.onAlertMessage} onAlertStatus={props.onAlertStatus} />
+            <DataGrid objects={currencies} config={{ pluralName: 'Currencies', singularName: 'Currency' }} options={{ ignoreProperties: ['isFromSystem'] }} />
         </div>
     );
 }

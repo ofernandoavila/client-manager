@@ -8,6 +8,10 @@ export default function FeaturesView() {
     return (
         <FeatureBasicView>
             <DataGrid 
+                config={{
+                    singularName: "Client",
+                    pluralName: "Clients"
+                }}
                 objects={features} 
                 options={{
                     ignoreProperties: ['displayOnTopMenu', 'displayAsConfigurationTab']

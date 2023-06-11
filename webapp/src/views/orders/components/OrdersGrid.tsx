@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { PreferencesHelper } from "../../../helpers/PreferencesHelper";
-import { Formatter } from "../../../helpers/Formatter";
 import { Order } from "../../../types/ContextTypes";
 import { OrderAPI } from "../../../helpers/Api";
 
@@ -69,7 +68,7 @@ export default function OrdersGrid(props: OrderGridPropsType) {
                             <td>{ item.client!.name }</td>
                             <td>{ item.shippingAddress }</td>
                             <td>{ item.paymentType }</td>
-                            <td>{ Formatter.Currency(item.amount, currency, decimalSeparator) }</td>
+                            <td></td>
                             <td>
                                 <div className="btn-group">
                                     <Link to={'/orders/' + item.id } ><button type="button" className="btn btn-sm btn-outline-secundary">View</button></Link>
