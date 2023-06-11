@@ -9,8 +9,8 @@ export default function FeaturesView() {
         <FeatureBasicView>
             <DataGrid 
                 config={{
-                    singularName: "Client",
-                    pluralName: "Clients"
+                    singularName: "Feature",
+                    pluralName: "Features"
                 }}
                 objects={features} 
                 options={{

@@ -14,13 +14,7 @@ export default function FeatureBasicView(props: FeatureBasicViewPropsType) {
     return (
         <ConfigurationsBasicView currentMenu="Configurations">
             { alertMessage ? <Alert alert={alertMessage} status={alertStatus} /> : '' }
-            <div className="row">
-                <div className="d-flex justify-content-between mb-4">
-                    <h3>Features</h3>
-                    <Link to={'/configurations/features/new'}> <button className="btn btn-primary">Create new feature</button> </Link>
-                </div>
-                { props.children }
-            </div>
+            { props.children }
         </ConfigurationsBasicView>
     );
 }
