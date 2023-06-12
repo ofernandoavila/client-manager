@@ -14,7 +14,10 @@ export default function FeaturesView() {
                 }}
                 objects={features} 
                 options={{
-                    ignoreProperties: ['displayOnTopMenu', 'displayAsConfigurationTab']
+                    ignoreProperties: ['displayOnTopMenu', 'displayAsConfigurationTab'],
+                    formOptions: {
+                        new: ['name']
+                    }
                 }}
             />
         </FeatureBasicView>

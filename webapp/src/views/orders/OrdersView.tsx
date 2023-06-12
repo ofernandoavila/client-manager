@@ -64,9 +64,28 @@ export function OrdersView() {
                                 valuesKeys: ["shippingAddress", "shippingCity", "shippingState", "shippingZipCode"]
                             } 
                         }
-                    ] 
+                    ],
+                    formOptions: {
+                        removeOnNew: ['id', 'orderHash'],
+                        removeOnEdit: ['id', 'orderHash']
+                    }
                 }}
             />
         </BasicView>
     );
 }
+
+// id?: number;
+//     client?: Client;
+//     clientId?: number;
+//     amount: number;
+//     status?: string;
+//     paymentType: string;
+//     paymentStatus?: string;
+//     shippingMethod: string;
+//     shippingStatus?: string;
+//     shippingAddress: string;
+//     shippingCity:  string;
+//     shippingState: string;
+//     shippingZipCode: string;
+//     orderHash?: string | null;
