@@ -19,6 +19,14 @@ interface DataGridConfigs {
 interface DataGridPropsOptions {
     formatProperty?: FormatProperty[];
     ignoreProperties?: string[];
+    formOptions?: DataGridFormOptions;
+}
+
+interface DataGridFormOptions {
+    new?: string[];
+    edit?: string[];
+    removeOnNew?: string[];
+    removeOnEdit?: string[];
 }
 
 interface FormatProperty {
@@ -42,27 +50,21 @@ export default function DataGrid<T extends GenericObjectType>(
     const [isViewOpen, setIsViewOpen] = useState<boolean>(false);
     const [ current, setCurrent ] = useState<T>();
 
-    function Toggle(event: any) {
+    function OpenModal(event: any, obj: T | null, modal: string) {
         event.preventDefault();
-        setIsNewOpen(true);
-    }
+        if(obj != null) setCurrent(obj);
 
-    const onCreateItem = (event: any) => {
-        setIsNewOpen(false);
-        console.log('onCreate called');
-        CloseModal();
-    }
-
-    const onEditItem = (event: any) => {
-        setIsEditOpen(false);
-        console.log('onEdit called');
-        CloseModal();
-    }
-
-    const onView = (event: any) => {
-        setIsViewOpen(false);
-        console.log('onView called');
-        CloseModal();
+        switch(modal) {
+            case "new":
+                setIsNewOpen(true);
+                break;
+            case "edit":
+                setIsEditOpen(true);
+                break;
+            case "view":
+                setIsViewOpen(true);
+                break;
+        }
     }
 
     const CloseModal = () => {
@@ -77,16 +79,14 @@ export default function DataGrid<T extends GenericObjectType>(
         }
     }, [props.objects]);
 
-    if (props.objects.length === 0 || keys.length === 0)
-        return <span>There is no data to show</span>;
-    if (props.objects == null || props.objects == undefined)
+    if (props.objects.length === 0 || keys.length === 0 || props.objects == null || props.objects == undefined)
         return <span>There is no data to show</span>;
 
     return (
         <>
             <div className="d-flex justify-content-between mb-4">
                 <h1 className="">{ props.config.pluralName }</h1>
-                <button className="btn btn-primary" onClick={event => Toggle(event)}>
+                <button className="btn btn-primary" onClick={event => OpenModal(event, null, 'new')}>
                     Create new { props.config.singularName }
                 </button>
             </div>
@@ -199,14 +199,14 @@ export default function DataGrid<T extends GenericObjectType>(
                                     <button
                                         type="button"
                                         className="btn btn-sm btn-outline-secundary"
-                                        onClick={() => setIsViewOpen(!isViewOpen)}
+                                        onClick={(event) => OpenModal(event, item, 'view')}
                                     >
                                         View
                                     </button>
                                     <button
                                         type="button"
                                         className="btn btn-sm btn-outline-secundary"
-                                        onClick={() => setIsEditOpen(!isEditOpen)}
+                                        onClick={(event) => OpenModal(event, item, 'edit')}
                                     >
                                         Edit
                                     </button>
@@ -217,20 +217,48 @@ export default function DataGrid<T extends GenericObjectType>(
                                         Delete
                                     </button>
                                 </div>
-                                <Modal size="lg" isOpen={isViewOpen} onCancel={onView} onCancelLabel="Cancel" title={ props.config.singularName }>
-                                    { Object.keys(item).map( key => {
-                                        return <p>{key}: { item[key] }</p>;
-                                    }) }
-                                </Modal>
-                                <Modal size="lg" isOpen={isEditOpen} onCancel={onEditItem} onCancelLabel="Discart changes" title={ props.config.singularName }>
-                                    <OperationsForm object={item} />
-                                </Modal>
                             </th>
                         </tr>
                     ))}
                 </tbody>
             </table>
             
+            <Modal size="lg" isOpen={isNewOpen} onCancel={CloseModal} onCancelLabel="Cancel" title={ props.config.singularName }>
+                <OperationsForm
+                    sectionName={props.config.singularName}
+                    object={current!}
+                    formType="new"
+                    options={{ 
+                        newFormFields: props.options?.formOptions?.new,
+                        removeFromNewFormFields: props.options?.formOptions?.removeOnNew  
+                    }}
+                />
+            </Modal>
+            <Modal size="lg" isOpen={isViewOpen} onCancel={CloseModal} onCancelLabel="Cancel" title={ props.config.singularName }>
+                { current != null ? Object.entries(current).map( ([key, value]) => {
+                    return (
+                        <div className="row">
+                            <div className="col-sm-3">
+                                <p>{ CamelToString(key) }</p>
+                            </div>
+                            <div className="col-sm-9">
+                                <p>{ value }</p>
+                            </div>
+                        </div>
+                    );
+                }): '' }
+            </Modal>
+            <Modal size="lg" isOpen={isEditOpen} onCancel={CloseModal} onCancelLabel="Discart changes" title={ props.config.singularName }>
+                <OperationsForm
+                    sectionName={props.config.singularName}
+                    object={current!}
+                    formType="edit"
+                    options={{ 
+                        editFormFields: props.options?.formOptions?.edit,
+                        removeFromEditFormFields: props.options?.formOptions?.removeOnEdit  
+                    }}
+                />
+            </Modal>
         </>
     );
 }
